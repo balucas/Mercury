@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mercury", "Mercury\Mercury.csproj", "{5260A59A-CC4A-421B-85E2-F568CD388359}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{16F617BF-4C62-45EF-8CED-A740EBA0A8DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{16F617BF-4C62-45EF-8CED-A740EBA0A8DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,6 +22,7 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{5260A59A-CC4A-421B-85E2-F568CD388359}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{5260A59A-CC4A-421B-85E2-F568CD388359}.Debug|Any CPU.Build.0 = Debug|x86
 		{5260A59A-CC4A-421B-85E2-F568CD388359}.Debug|ARM.ActiveCfg = Debug|ARM
 		{5260A59A-CC4A-421B-85E2-F568CD388359}.Debug|ARM.Build.0 = Debug|ARM
 		{5260A59A-CC4A-421B-85E2-F568CD388359}.Debug|ARM.Deploy.0 = Debug|ARM
