@@ -24,12 +24,18 @@ namespace API
 
             AuthenticateSession(ENDPOINT, SUBSCRIPTION_KEY);
         }
-
+        
+        //Authenticate Client
         private void AuthenticateSession(string endpoint, string key)
         {
             Client = new FaceClient(new ApiKeyServiceClientCredentials(key)){ Endpoint = endpoint };
         }
 
+        public AudienceFrame CreateAudienceFrame(byte[] imageBytes)
+        {
+            
+            return null;
+        }
 
     }
-}
+}   
