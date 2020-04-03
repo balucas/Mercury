@@ -33,7 +33,7 @@ namespace API
             Client = new FaceClient(new ApiKeyServiceClientCredentials(key)){ Endpoint = endpoint };
         }
 
-        public async void CreateChartItem(byte[] imageBytes)
+        public async Task CreateChartItem(byte[] imageBytes, DateTime time)
         {
             AudienceFrame snapshot = new AudienceFrame(imageBytes);
 
@@ -41,8 +41,9 @@ namespace API
             
             Chart.Add(new TestChartItem()
             {
-                var1 = snapshot.AngerAvg,
-                var2 = snapshot.ContemptAvg
+                Time = time.ToString("hh:mm:ss"),
+                Var1 = snapshot.AngerAvg,
+                Var2 = snapshot.ContemptAvg
             });
         }
 
@@ -51,8 +52,8 @@ namespace API
     //PLACEHOLDER CHART ITEM
     public class TestChartItem
     {
-        public double time;
-        public double var1;
-        public double var2;
+        public string Time;
+        public double Var1;
+        public double Var2;
     }
 }   
