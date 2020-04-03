@@ -147,6 +147,8 @@ namespace Mercury
 			//});
 
 			await Session.CreateChartItem(await _takePhoto(), DateTime.Now);
+
+
 		}
 
 		private async Task<byte[]> _takePhoto()
@@ -174,6 +176,11 @@ namespace Mercury
 			var stream = new InMemoryRandomAccessStream();
 			var imgFormat = ImageEncodingProperties.CreateBmp();
 			await _mediaCapture.CapturePhotoToStreamAsync(imgFormat, stream);
+
+			var image = new BitmapImage();
+			await image.SetSourceAsync(stream);
+
+			imageControl.Source = image;
 
 
 			var readStream = stream.AsStreamForRead();

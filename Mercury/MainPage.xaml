@@ -126,7 +126,6 @@
 
 			<StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal">
 				<TextBlock Text="Test" Width="300" TextAlignment="Center" />
-				<Button Content="Add Data" Click="Add_Chart_Data" />
 				<Button Content="Toggle Pane" Click="Button_Toggle_Pane" />
 				<Image x:Name="imageControl" Width="200" Height="200"/>
 			</StackPanel>
