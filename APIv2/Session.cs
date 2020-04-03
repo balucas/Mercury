@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace API
 
         private IFaceClient Client;
         public List<AudienceFrame> AFrameList;
+        public ObservableCollection<TestChartItem> Chart;
 
         public Session()
         {
@@ -31,11 +33,26 @@ namespace API
             Client = new FaceClient(new ApiKeyServiceClientCredentials(key)){ Endpoint = endpoint };
         }
 
-        public AudienceFrame CreateAudienceFrame(byte[] imageBytes)
+        public async void CreateChartItem(byte[] imageBytes)
         {
+            AudienceFrame snapshot = new AudienceFrame(imageBytes);
+
+            await snapshot.Detect(Client);
             
-            return null;
+            Chart.Add(new TestChartItem()
+            {
+                var1 = snapshot.AngerAvg,
+                var2 = snapshot.ContemptAvg
+            });
         }
 
+    }
+
+    //PLACEHOLDER CHART ITEM
+    public class TestChartItem
+    {
+        public double time;
+        public double var1;
+        public double var2;
     }
 }   
