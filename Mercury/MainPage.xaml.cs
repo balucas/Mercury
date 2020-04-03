@@ -84,7 +84,6 @@ namespace Mercury
 
 			_timer.Interval = new TimeSpan(0,0,5);
 			_timer.Tick += UpdateRealTimeData;
-			_timer.Start();
 		}
 
 		//private void FillVisitsData()
@@ -215,12 +214,14 @@ namespace Mercury
 				await _mediaCapture.StartPreviewAsync();
 				RecordingButton.Content = "ON";
 				_activeRecording = true;
+				_timer.Start();
 			}
 			else
 			{
 				await _mediaCapture.StopPreviewAsync();
 				RecordingButton.Content = "OFF";
 				_activeRecording = false;
+				_timer.Stop();
 			}
 		}
 	}
