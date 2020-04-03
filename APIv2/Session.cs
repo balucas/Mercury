@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,6 +26,9 @@ namespace API
             ENDPOINT = Environment.GetEnvironmentVariable("FACE_ENDPOINT");
 
             AuthenticateSession(ENDPOINT, SUBSCRIPTION_KEY);
+
+            AFrameList = new List<AudienceFrame>();
+            Chart = new ObservableCollection<TestChartItem>();
         }
         
         //Authenticate Client
@@ -33,18 +37,20 @@ namespace API
             Client = new FaceClient(new ApiKeyServiceClientCredentials(key)){ Endpoint = endpoint };
         }
 
-        public async Task CreateChartItem(byte[] imageBytes, DateTime time)
+        public async Task<TestChartItem> CreateChartItem(byte[] imageBytes, DateTime time)
         {
             AudienceFrame snapshot = new AudienceFrame(imageBytes);
 
             await snapshot.Detect(Client);
             
-            Chart.Add(new TestChartItem()
+            var newChartData = new TestChartItem()
             {
-                Time = time.ToString("hh:mm:ss"),
+                Time = time.Second,
                 Var1 = snapshot.AngerAvg,
                 Var2 = snapshot.ContemptAvg
-            });
+            };
+
+            return newChartData;
         }
 
     }
@@ -52,8 +58,8 @@ namespace API
     //PLACEHOLDER CHART ITEM
     public class TestChartItem
     {
-        public string Time;
-        public double Var1;
-        public double Var2;
+	    public double Time;
+	    public double Var1;
+	    public double Var2;
     }
 }   

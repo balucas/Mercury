@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Media.Capture;
@@ -30,6 +31,7 @@ namespace Mercury
 		private DispatcherTimer _timer;
 		private bool _activeRecording;
 		public Session Session;
+		public ObservableCollection<MoreTestChartData> TestChart { get; }
 
 		public MainPage()
 		{
@@ -40,6 +42,7 @@ namespace Mercury
 			_timer = new DispatcherTimer();
 			_activeRecording = false;
 			Session = new Session();
+			TestChart = new ObservableCollection<MoreTestChartData>();
 
 			Application.Current.Resuming += Application_Resuming;
 		}
@@ -77,60 +80,57 @@ namespace Mercury
 
 		private void Page_Loaded(object sender, RoutedEventArgs e)
 		{
-			//FillVisitsData();
-			//FillInitialRealTimeData();
+			FillVisitsData();
+			//FillInitialData();
 
 			this.DataContext = this;
 
 			_timer.Interval = new TimeSpan(0,0,5);
-			_timer.Tick += UpdateRealTimeData;
+			_timer.Tick += UpdateRealTimeDataAsync;
 		}
 
-		//private void FillVisitsData()
-		//{
-		//	var startDate = DateTime.Today.AddMonths(-1);
-		//	var visits = 200;
-		//	var newVisits = 50;
-		//	var pageviews = 390;
+		private void FillVisitsData()
+		{
+			var startDate = DateTime.Today.AddMonths(-1);
+			var visits = 200;
+			var newVisits = 50;
+			var pageviews = 390;
 
-		//	var rnd = new Random();
+			var rnd = new Random();
 
-		//	for (var date = startDate; date < DateTime.Today; date = date.AddDays(1))
-		//	{
-		//		FaceData.Add(new FaceDataItem()
-		//		{
-		//			Date = date.ToString("MMM-dd"),
-		//			Var1 = visits,
-		//			Var2 = newVisits,
-		//			Var3 = pageviews
-		//		});
+			for (var date = startDate; date < DateTime.Today; date = date.AddDays(1))
+			{
+				FaceData.Add(new FaceDataItem()
+				{
+					Date = date.ToString("MMM-dd"),
+					Var1 = visits,
+					Var2 = newVisits,
+					Var3 = pageviews
+				});
 
-		//		visits += (int)(50 * (rnd.NextDouble() - 0.3));
-		//		newVisits += (int)(30 * (rnd.NextDouble() - 0.3));
-		//		pageviews += (int)(80 * (rnd.NextDouble() - 0.3));
-		//	}
-		//}
+				visits += (int)(50 * (rnd.NextDouble() - 0.3));
+				newVisits += (int)(30 * (rnd.NextDouble() - 0.3));
+				pageviews += (int)(80 * (rnd.NextDouble() - 0.3));
+			}
+		}
 
-		//private void FillInitialRealTimeData()
-		//{
-		//	var startDate = DateTime.Now.AddSeconds(-15);
-		//	var visits = 10;
+		private void FillInitialData()
+		{
+			var startDate = DateTime.Now.AddSeconds(-15);
 
-		//	var rnd = new Random();
+			var rnd = new Random();
 
-		//	for (var date = startDate; date < DateTime.Now; date = date.AddSeconds(1))
-		//	{
-		//		RealTimeData.Add(new RealTimeDataItem()
-		//		{
-		//			Seconds = date.Second,
-		//			Visits = visits
-		//		});
-
-		//		visits += (int)(5 * (rnd.NextDouble() - 0.5));
-		//		visits = visits < 0 ? 0 : visits;
-		//	}
-		//}
-		private async void UpdateRealTimeData(object sender, object e)
+			for (var date = startDate; date < DateTime.Now; date = date.AddSeconds(1))
+			{
+				TestChart.Add(new MoreTestChartData()
+				{
+					Time = date.Second,
+					Var1 = (double) rnd.Next(1, 100) / 100,
+					Var2 = (double)rnd.Next(1, 100) / 100
+				});
+			}
+		}
+		private async void UpdateRealTimeDataAsync(object sender, object e)
 		{
 			//RealTimeData.RemoveAt(0);
 
@@ -145,48 +145,74 @@ namespace Mercury
 			//	Visits = visits
 			//});
 
-			await Session.CreateChartItem(await _takePhoto(), DateTime.Now);
 
+			var tempChart = await Session.CreateChartItem(await TakePhoto(), DateTime.Now);
+			TestChart.Add(new MoreTestChartData()
+			{
+				Time = tempChart.Time,
+				Var1 = tempChart.Var1,
+				Var2 = tempChart.Var2
+			});
 
+			//await TakePhoto();
 		}
 
-		private async Task<byte[]> _takePhoto()
+		private async Task<byte[]> TakePhoto()
 		{
 
-			/*
-			ImageEncodingProperties imgFormat = ImageEncodingProperties.CreateJpeg();
-
-			// create storage file in local app storage
-			StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync(
-				"TestPhoto.jpg",
-				CreationCollisionOption.GenerateUniqueName);
-
-			// take photo
-			await _mediaCapture.CapturePhotoToStorageFileAsync(imgFormat, file);
-
-			// Get photo as a BitmapImage
-			BitmapImage bmpImage = new BitmapImage(new Uri(file.Path));
-
-			// imagePreview is a <Image> object defined in XAML
-			imageControl.Source = bmpImage;
-			*/
-
-
 			var stream = new InMemoryRandomAccessStream();
-			var imgFormat = ImageEncodingProperties.CreateBmp();
-			await _mediaCapture.CapturePhotoToStreamAsync(imgFormat, stream);
+			await _mediaCapture.CapturePhotoToStreamAsync(ImageEncodingProperties.CreateJpeg(), stream);
 
-			var image = new BitmapImage();
-			await image.SetSourceAsync(stream);
+			var bitMap = new BitmapImage();
+			stream.Seek(0);
+			await bitMap.SetSourceAsync(stream);
+			imageControl.Source = bitMap;
 
-			imageControl.Source = image;
-
-
+			stream.Seek(0);
 			var readStream = stream.AsStreamForRead();
 			var byteArray = new byte[readStream.Length];
 			await readStream.ReadAsync(byteArray, 0, byteArray.Length);
 			return byteArray;
+
+
+			//ImageEncodingProperties imgFormat = ImageEncodingProperties.CreateJpeg();
+
+			//// create storage file in local app storage
+			//StorageFile file = await ApplicationData.Current.LocalFolder.CreateFileAsync(
+			//	"TestPhoto.jpg",
+			//	CreationCollisionOption.GenerateUniqueName);
+
+			//// take photo
+			//await _mediaCapture.CapturePhotoToStorageFileAsync(imgFormat, file);
+
+			//// Get photo as a BitmapImage
+			//BitmapImage bmpImage = new BitmapImage(new Uri(file.Path));
+
+			//// imagePreview is a <Image> object defined in XAML
+			//imageControl.Source = bmpImage;
+
+
+
+
+			//return await ImageToBytes(bmpImage);
+
 		}
+
+		//public static async Task<byte[]> ImageToBytes(BitmapImage image)
+		//{
+		//	RandomAccessStreamReference streamRef = RandomAccessStreamReference.CreateFromUri(image.UriSource);
+		//	IRandomAccessStreamWithContentType streamWithContent = await streamRef.OpenReadAsync();
+		//	byte[] buffer = new byte[streamWithContent.Size];
+		//	await streamWithContent.ReadAsync(buffer.AsBuffer(), (uint)streamWithContent.Size, InputStreamOptions.None);
+		//	return buffer;
+		//}
+
+		//public byte[] ImageToByteArray(Image imageIn)
+		//{
+		//	MemoryStream ms = new MemoryStream();
+		//	imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
+		//	return ms.ToArray();
+		//}
 
 
 		private void Button_Toggle_Pane(object sender, RoutedEventArgs e)
@@ -194,7 +220,7 @@ namespace Mercury
 			MainSplitView.IsPaneOpen = !MainSplitView.IsPaneOpen;
 		}
 
-		private void Button_Capture_Photo(object sender, RoutedEventArgs e)
+		private async void Button_Capture_Photo(object sender, RoutedEventArgs e)
 		{
 			//try
 			//{
@@ -204,7 +230,7 @@ namespace Mercury
 			//{
 			//	// exception here...
 			//}
-
+			TakePhoto();
 		}
 
 		private async void Button_Toggle_Recording(object sender, RoutedEventArgs e)
@@ -248,6 +274,13 @@ namespace Mercury
 		public int Var1 { get; set; }
 		public int Var2 { get; set; }
 		public int Var3 { get; set; }
+	}
+
+	public class MoreTestChartData
+	{
+		public double Time { get; set; }
+		public double Var1 { get; set; }
+		public double Var2 { get; set; }
 	}
 
 

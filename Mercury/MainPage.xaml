@@ -29,8 +29,8 @@
 				<Border Grid.ColumnSpan="4" x:Name="VisitOverviewChart" MaxHeight="500">
 
 					<qc:SerialChart LegendVisibility="Collapsed"
-					                DataSource="{Binding Session.Chart}"
-					                CategoryValueMemberPath="Time"
+					                DataSource="{Binding FaceData}"
+					                CategoryValueMemberPath="Date"
 					                MinimumCategoryGridStep="100">
 						<qc:SerialChart.Graphs>
 							<qc:AreaGraph Title="Var1" ValueMemberPath="Var1" />
@@ -46,7 +46,7 @@
 				        MinWidth="200">
 
 					<qc:SerialChart LegendVisibility="Collapsed"
-					                DataSource="{Binding Session.Chart}"
+					                DataSource="{Binding TestChart}"
 					                CategoryValueMemberPath="Time">
 						<qc:SerialChart.Graphs>
 							<qc:ColumnGraph Title="Realtime visits" ValueMemberPath="Var1">
@@ -68,7 +68,7 @@
 				        MinWidth="200">
 
 					<qc:SerialChart LegendVisibility="Collapsed"
-					                DataSource="{Binding Session.Chart}"
+					                DataSource="{Binding TestChart}"
 					                CategoryValueMemberPath="Time">
 						<qc:SerialChart.Graphs>
 							<qc:ColumnGraph Title="New visitors" ValueMemberPath="Var2" />
