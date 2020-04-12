@@ -22,6 +22,7 @@ namespace API
 
         public Session()
         {
+            //Note: Set environment variables through cmd, e.g. "setx FACE_SUBSCRIPTION_KEY [api key]"
             SUBSCRIPTION_KEY = Environment.GetEnvironmentVariable("FACE_SUBSCRIPTION_KEY");
             ENDPOINT = Environment.GetEnvironmentVariable("FACE_ENDPOINT");
 
