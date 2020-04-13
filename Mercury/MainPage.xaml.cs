@@ -250,6 +250,11 @@ namespace Mercury
 				_timer.Stop();
 			}
 		}
+
+		private void Exit_Click(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(MainMenu));
+		}
 	}
 
 	public class FaceDataItem

@@ -22,9 +22,12 @@
                        FontSize="60"
                        HorizontalAlignment="Center"
                        Padding="50"/>
-            <Button Content="Begin New Session"/>
-            <Button Content="View Previous Sessions"/>
-            <Button Content="Exit"/>
+            <Button Content="Begin New Session"
+                    Click="Begin_Click"/>
+            <Button Content="View Previous Sessions"
+                    Click="ViewPrev_Click"/>
+            <Button Content="Exit"
+                    Click="Exit_Click"/>
         </StackPanel>
     </Grid>
 </Page>

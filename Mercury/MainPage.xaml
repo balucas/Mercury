@@ -99,7 +99,7 @@
 					<Button Grid.Row="2" Grid.Column="1" Content="Folder"></Button>
 
 					<TextBlock Grid.Row="3" Grid.Column="0" Text="Exit:" FontSize="20" VerticalAlignment="Center"/>
-					<Button Grid.Row="3" Grid.Column="1" Content="Exit"></Button>
+					<Button Grid.Row="3" Grid.Column="1" Content="Exit" Click="Exit_Click"></Button>
 
 				</Grid>
 
