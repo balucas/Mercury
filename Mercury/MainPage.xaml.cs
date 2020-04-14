@@ -150,8 +150,8 @@ namespace Mercury
 			TestChart.Add(new MoreTestChartData()
 			{
 				Time = tempChart.Time,
-				Var1 = tempChart.Var1,
-				Var2 = tempChart.Var2
+				Var1 = tempChart.Anger,
+				Var2 = tempChart.Contempt
 			});
 
 			//await TakePhoto();

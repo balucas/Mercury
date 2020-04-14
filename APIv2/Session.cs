@@ -17,8 +17,7 @@ namespace API
         private string ENDPOINT;
 
         private IFaceClient Client;
-        public List<AudienceFrame> AFrameList;
-        public ObservableCollection<TestChartItem> Chart;
+        private List<FrameData> _frameDatas;
 
         public Session()
         {
@@ -27,40 +26,38 @@ namespace API
             ENDPOINT = Environment.GetEnvironmentVariable("FACE_ENDPOINT");
 
             AuthenticateSession(ENDPOINT, SUBSCRIPTION_KEY);
-
-            AFrameList = new List<AudienceFrame>();
-            Chart = new ObservableCollection<TestChartItem>();
         }
-        
+
         //Authenticate Client
         private void AuthenticateSession(string endpoint, string key)
         {
-            Client = new FaceClient(new ApiKeyServiceClientCredentials(key)){ Endpoint = endpoint };
+            Client = new FaceClient(new ApiKeyServiceClientCredentials(key)) { Endpoint = endpoint };
+            _frameDatas = new List<FrameData>();
         }
 
-        public async Task<TestChartItem> CreateChartItem(byte[] imageBytes, DateTime time)
+        public async Task<FrameData> CreateChartItem(byte[] imageBytes, DateTime time)
         {
             AudienceFrame snapshot = new AudienceFrame(imageBytes);
 
-            await snapshot.Detect(Client);
-            
-            var newChartData = new TestChartItem()
-            {
-                Time = time.Second,
-                Var1 = snapshot.AngerAvg,
-                Var2 = snapshot.ContemptAvg
-            };
+            var frame = await snapshot.Detect(Client);
+            _frameDatas.Add(frame);
 
-            return newChartData;
+            return frame;
         }
 
     }
 
     //PLACEHOLDER CHART ITEM
-    public class TestChartItem
+    public class FrameData
     {
-	    public double Time;
-	    public double Var1;
-	    public double Var2;
+        public double Time { get; set; }
+        public double Anger { get; set; } = 0;
+        public double Contempt { get; set; } = 0;
+        public double Disgust { get; set; } = 0;
+        public double Fear { get; set; } = 0;
+        public double Happiness { get; set; } = 0;
+        public double Neutral { get; set; } = 0;
+        public double Sadness { get; set; } = 0;
+        public double Surprise { get; set; } = 0;
     }
-}   
+}
