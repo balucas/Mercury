@@ -147,7 +147,7 @@ namespace Mercury
 			//});
 
 
-			var tempChart = await Session.CreateChartItem(await TakePhoto(), DateTime.Now);
+			var tempChart = await Session.CreateChartItem(await TakePhoto(), "");
 			TestChart.Add(new MoreTestChartData()
 			{
 				Time = tempChart.Time,

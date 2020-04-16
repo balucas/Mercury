@@ -39,12 +39,13 @@ namespace API
             _frameDatas = new List<FrameData>();
         }
 
-        public async Task<FrameData> CreateChartItem(byte[] imageBytes, DateTime time)
+        public async Task<FrameData> CreateChartItem(byte[] imageBytes, string time)
         {
             AudienceFrame snapshot = new AudienceFrame(imageBytes);
 
             //Store frame data
             var frame = await snapshot.Detect(Client);
+            frame.Time = time;
             _frameDatas.Add(frame);
 
             return frame;
@@ -93,7 +94,7 @@ namespace API
     //PLACEHOLDER CHART ITEM
     public class FrameData
     {
-        public double Time { get; set; }
+        public string Time { get; set; }
         public double Anger { get; set; } = 0;
         public double Contempt { get; set; } = 0;
         public double Disgust { get; set; } = 0;
