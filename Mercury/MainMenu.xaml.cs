@@ -39,7 +39,7 @@ namespace Mercury
 
         private void ViewPrev_Click(object sender, RoutedEventArgs e)
         {
-
+            Frame.Navigate(typeof(SavedSessionPage));
         }
     }
 }

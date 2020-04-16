@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
@@ -39,10 +40,23 @@ namespace API
         {
             AudienceFrame snapshot = new AudienceFrame(imageBytes);
 
+            //Store frame data
             var frame = await snapshot.Detect(Client);
             _frameDatas.Add(frame);
 
             return frame;
+        }
+
+        public void SaveSession()
+        {
+            var csv = new StringBuilder();
+
+            foreach(var data in _frameDatas)
+            {
+                csv.AppendLine($"{data.Time},{data.Anger},{data.Contempt},{data.Disgust},{data.Fear},{data.Happiness},{data.Neutral},{data.Sadness},{data.Surprise}");
+            }
+
+            //File.WriteAllText("./test.csv", csv.ToString());
         }
 
     }
