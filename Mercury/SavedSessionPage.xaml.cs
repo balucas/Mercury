@@ -36,6 +36,8 @@ namespace Mercury
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            this.DataContext = this;
+
             Random rand = new Random();
 
             for (int i = 0; i <= 50; i++)
@@ -57,7 +59,6 @@ namespace Mercury
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.DataContext = this;
         }
     }
 }

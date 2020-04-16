@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using API;
+using System.Diagnostics;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -248,6 +249,11 @@ namespace Mercury
 				RecordingButton.Content = "OFF";
 				_activeRecording = false;
 				_timer.Stop();
+
+				//Session Storage
+				Windows.Storage.StorageFolder testfolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+				Debug.WriteLine("Local storage: " + testfolder.Path);
+				Session.SaveSession(testfolder.Path);
 			}
 		}
 

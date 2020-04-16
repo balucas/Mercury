@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.Design;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -47,7 +48,7 @@ namespace API
             return frame;
         }
 
-        public void SaveSession()
+        public void SaveSession(string path)
         {
             var csv = new StringBuilder();
 
@@ -56,6 +57,8 @@ namespace API
                 csv.AppendLine($"{data.Time},{data.Anger},{data.Contempt},{data.Disgust},{data.Fear},{data.Happiness},{data.Neutral},{data.Sadness},{data.Surprise}");
             }
 
+
+            File.WriteAllText(path + "\\savedsessions.txt", csv.ToString());
             //File.WriteAllText("./test.csv", csv.ToString());
         }
 
