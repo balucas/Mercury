@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Design;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -50,18 +52,42 @@ namespace API
 
         public void SaveSession(string path)
         {
-            var csv = new StringBuilder();
+            const string FileName = "savedsessions.json";
+            List<SavedSession> savedata;
 
-            foreach(var data in _frameDatas)
+            //Attempt to read file if already exists
+            try
             {
-                csv.AppendLine($"{data.Time},{data.Anger},{data.Contempt},{data.Disgust},{data.Fear},{data.Happiness},{data.Neutral},{data.Sadness},{data.Surprise}");
+                //Read file and deserialize
+                savedata = JsonSerializer.Deserialize<List<SavedSession>>(File.ReadAllText(path + "\\" + FileName));
+            }
+            catch (Exception ex)
+            {
+                //Save data doesnt exist, create new
+                savedata = new List<SavedSession>();
             }
 
+            //Add current session data and serialize
+            savedata.Add(new SavedSession(_frameDatas));
+            string jsonString = JsonSerializer.Serialize(savedata);
 
-            File.WriteAllText(path + "\\savedsessions.txt", csv.ToString());
-            //File.WriteAllText("./test.csv", csv.ToString());
+            //save to file
+            File.WriteAllText(path + "\\" + FileName, jsonString);
         }
 
+    }
+
+    //Class to attach timestamp to sessiondata for json serialization
+    class SavedSession
+    {
+        public DateTime TimeStamp { get; set; }
+        public List<FrameData> SessionData { get; set; }
+
+        public SavedSession(List<FrameData> data)
+        {
+            TimeStamp = DateTime.Now;
+            SessionData = data;
+        }
     }
 
     //PLACEHOLDER CHART ITEM
