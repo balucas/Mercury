@@ -11,21 +11,91 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <ListView 
-            x:Name="SessionList" 
-            ItemsSource="{x:Bind SavedSessions}"
-            SelectionMode="Multiple">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="api:SavedSession">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{x:Bind TimeStamp}" Margin="20,20,20,20"/>
-                        <TextBlock Text="{x:Bind SessionData.Count}" Margin="20,20,20,20"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+    <Grid
+        Margin="300, 50, 300, 50">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Text="Saved Sessions"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="40"/>
+        <Border
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            BorderThickness="2"
+            BorderBrush="Gray">
+            <ListView 
+                x:Name="SessionList" 
+                ItemsSource="{x:Bind SavedSessions}"
+                SelectionMode="Multiple">
+
+                <ListView.HeaderTemplate>
+                    <DataTemplate x:DataType="api:SavedSession">
+                        <Grid
+                            Width="400">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="15*"/>
+                                <ColumnDefinition Width="150"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0"
+                                    BorderThickness="0,0,0,2"
+                                    BorderBrush="Gray"/>
+
+                            <Border Grid.Column="1"
+                                    BorderThickness="0,0,0,2"
+                                    BorderBrush="Gray">
+                                <TextBlock Text="Time Stamp" 
+                                           FontSize="16"
+                                           Margin="10,10,10,10"
+                                           HorizontalAlignment="Center"/>
+                            </Border>
+
+                            <Border Grid.Column="2"
+                                    BorderThickness="0,0,0,2"
+                                    BorderBrush="Gray">
+                                <TextBlock Text="Frame Count" 
+                                           FontSize="16"
+                                           Margin="10,10,40,10"
+                                           HorizontalAlignment="Center"/>
+                            </Border>
+
+                        </Grid>
+                    </DataTemplate>
+                </ListView.HeaderTemplate>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="api:SavedSession">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="150"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0">
+                                <TextBlock Text="{Binding TimeStamp}" 
+                                           Margin="20,20,10,20"
+                                           HorizontalAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Column="1">
+                                <TextBlock Text="{Binding SessionData.Count}" 
+                                           Margin="50,20,20,20"
+                                           HorizontalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Border>
         <Button 
+            Grid.Row="2"
             Content="View Statistics"
             Click="View_Stats"
             HorizontalAlignment="Center"/>
