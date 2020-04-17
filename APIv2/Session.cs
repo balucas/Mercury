@@ -44,10 +44,10 @@ namespace API
 
         public async Task<AudienceFrame> CreateChartItem(byte[] imageBytes, string time)
         {
-            AudienceFrame snapshot = new AudienceFrame(time);
+            AudienceFrame snapshot = new AudienceFrame();
 
             //Store frame data
-            await snapshot.Detect(Client, imageBytes);
+            await snapshot.Detect(Client, imageBytes, time);
             _audienceFrames.Add(snapshot);
 
             return snapshot;
@@ -78,25 +78,29 @@ namespace API
             if (_audienceFrames.Count == 0)
                 return;
 
-            List<SavedSession> savedata;
+            SaveData savedata;
 
             //Attempt to read file if already exists
             try
             {
                 //Read file and deserialize
-                savedata = JsonSerializer.Deserialize<List<SavedSession>>(File.ReadAllText(path + "\\" + FileName));
+                savedata = JsonSerializer.Deserialize<SaveData>(File.ReadAllText(path + "\\" + FileName));
             }
             catch
             {
                 //Save data doesn't exist, create new
-                savedata = new List<SavedSession>();
+                savedata = new SaveData();
             }
-            if(savedata.Count == 0)
+            if(savedata.Sessions.Count == 0)
             {
                 Debug.WriteLine("ERROR SAVEDATA EMPTY ERROR");
             }
             //Add current session data and serialize
-            savedata.Add(new SavedSession(_audienceFrames));
+            SavedSession s = new SavedSession();
+            s.SessionData = _audienceFrames;
+            s.TimeStamp = DateTime.Now;
+            savedata.Sessions.Add(s);
+
             string jsonString = JsonSerializer.Serialize(savedata);
 
             //save to file
@@ -105,16 +109,16 @@ namespace API
 
     }
 
-    //Class to attach timestamp to sessiondata for json serialization
-    public struct SavedSession
+    //class to attach timestamp to sessiondata for json serialization
+    public class SavedSession
     {
         public DateTime TimeStamp { get; set; }
         public List<AudienceFrame> SessionData { get; set; }
+    }
+    //class for list json serialization/deserialization
+    public class SaveData
+    {
+        public List<SavedSession> Sessions { get; set; }
 
-        public SavedSession(List<AudienceFrame> data)
-        {
-            TimeStamp = DateTime.Now;
-            SessionData = data;
-        }
     }
 }

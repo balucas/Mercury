@@ -21,13 +21,9 @@ namespace API
         public double Sadness { get; set; } = 0;
         public double Surprise { get; set; } = 0;
 
-        public AudienceFrame(string time)
+        public async Task Detect(IFaceClient client, byte[] imgBytes, string time)
         {
             Time = time;
-        }
-
-        public async Task Detect(IFaceClient client, byte[] imgBytes)
-        {
             IList<DetectedFace> faceList = await client.Face.DetectWithStreamAsync(
                 new MemoryStream(imgBytes),
                 returnFaceAttributes: new List<FaceAttributeType>
