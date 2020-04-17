@@ -250,13 +250,17 @@ namespace Mercury
 				_activeRecording = false;
 				_timer.Stop();
 
-				//Session Storage
-				Windows.Storage.StorageFolder testfolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-				Debug.WriteLine("Local storage: " + testfolder.Path);
-				Session.SaveSession(testfolder.Path);
 			}
 		}
 
+		//save current session
+		private void SaveSession()
+		{
+			//Session Storage
+			Windows.Storage.StorageFolder testfolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+			Debug.WriteLine("Local storage: " + testfolder.Path);
+			Session.SaveSession(testfolder.Path);
+		}
 		private void Exit_Click(object sender, RoutedEventArgs e)
 		{
 			Frame.Navigate(typeof(MainMenu));
@@ -289,7 +293,7 @@ namespace Mercury
 
 	public class MoreTestChartData
 	{
-		public double Time { get; set; }
+		public string Time { get; set; }
 		public double Var1 { get; set; }
 		public double Var2 { get; set; }
 	}
