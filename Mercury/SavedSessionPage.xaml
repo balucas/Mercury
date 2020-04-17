@@ -6,31 +6,28 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:qc="using:Ailon.QuickCharts"
+    xmlns:api="using:API"
 	Loaded="Page_Loaded"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-        </Grid.RowDefinitions>
-        <Border Grid.Row="1">
-        <qc:SerialChart 
-                        LegendVisibility="Visible"
-					    DataSource="{Binding FaceData}"
-					    CategoryValueMemberPath="Time">
-            <qc:SerialChart.Graphs>
-                <qc:LineGraph Title="Anger" ValueMemberPath="Anger" />
-                <qc:LineGraph Title="Contempt" ValueMemberPath="Contempt" />
-                <qc:LineGraph Title="Disgust" ValueMemberPath="Disgust" />
-                <qc:LineGraph Title="Fear" ValueMemberPath="Fear" />
-                <qc:LineGraph Title="Happiness" ValueMemberPath="Happiness" />
-                <qc:LineGraph Title="Neutral" ValueMemberPath="Neutral" />
-                <qc:LineGraph Title="Sadness" ValueMemberPath="Sadness" />
-                <qc:LineGraph Title="Surprise" ValueMemberPath="Surprise" />
-            </qc:SerialChart.Graphs>
-        </qc:SerialChart>
-        </Border>
+        <ListView 
+            x:Name="SessionList" 
+            ItemsSource="{x:Bind SavedSessions}"
+            SelectionMode="Multiple">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="api:SavedSession">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{x:Bind TimeStamp}" Margin="20,20,20,20"/>
+                        <TextBlock Text="{x:Bind SessionData.Count}" Margin="20,20,20,20"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button 
+            Content="View Statistics"
+            Click="View_Stats"
+            HorizontalAlignment="Center"/>
     </Grid>
 </Page>
