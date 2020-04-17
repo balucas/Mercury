@@ -63,8 +63,10 @@ namespace API
                 //Read file and deserialize
                 res = JsonSerializer.Deserialize<List<SavedSession>>(File.ReadAllText(path + "\\" + FileName));
             }
-            catch
+            catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
+
                 //Save date doesn't exist, create new
                 res = new List<SavedSession>();
             }
@@ -78,28 +80,13 @@ namespace API
             if (_audienceFrames.Count == 0)
                 return;
 
-            SaveData savedata;
+            List<SavedSession> savedata = Session.RetrieveSavedSessions(path);
 
-            //Attempt to read file if already exists
-            try
-            {
-                //Read file and deserialize
-                savedata = JsonSerializer.Deserialize<SaveData>(File.ReadAllText(path + "\\" + FileName));
-            }
-            catch
-            {
-                //Save data doesn't exist, create new
-                savedata = new SaveData();
-            }
-            if(savedata.Sessions.Count == 0)
-            {
-                Debug.WriteLine("ERROR SAVEDATA EMPTY ERROR");
-            }
             //Add current session data and serialize
             SavedSession s = new SavedSession();
             s.SessionData = _audienceFrames;
             s.TimeStamp = DateTime.Now;
-            savedata.Sessions.Add(s);
+            savedata.Add(s);
 
             string jsonString = JsonSerializer.Serialize(savedata);
 
@@ -109,16 +96,10 @@ namespace API
 
     }
 
-    //class to attach timestamp to sessiondata for json serialization
+    //class to attach timestamp to session data for json serialization
     public class SavedSession
     {
         public DateTime TimeStamp { get; set; }
         public List<AudienceFrame> SessionData { get; set; }
-    }
-    //class for list json serialization/deserialization
-    public class SaveData
-    {
-        public List<SavedSession> Sessions { get; set; }
-
     }
 }

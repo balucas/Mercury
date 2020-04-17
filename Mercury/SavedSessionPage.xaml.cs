@@ -36,25 +36,6 @@ namespace Mercury
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            //this.DataContext = this;
-
-            //Random rand = new Random();
-
-            //for (int i = 0; i <= 50; i++)
-            //{
-            //    FaceData.Add(new AudienceFrame("")
-            //    {
-            //        Anger = rand.NextDouble(),
-            //        Contempt = rand.NextDouble(),
-            //        Disgust = rand.NextDouble(),
-            //        Fear = rand.NextDouble(),
-            //        Happiness = rand.NextDouble(),
-            //        Neutral = rand.NextDouble(),
-            //        Sadness = rand.NextDouble(),
-            //        Surprise = rand.NextDouble(),
-            //        Time = ""
-            //    });
-            //}
 
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
