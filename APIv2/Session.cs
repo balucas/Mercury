@@ -18,21 +18,22 @@ namespace API
 {
     public class Session
     {
-        private string SUBSCRIPTION_KEY;
-        private string ENDPOINT;
-
+        //API connection client
         private IFaceClient Client;
+
+        //Audience Data
         private List<AudienceFrame> _audienceFrames;
 
+        //Define save file name
         private const string FileName = "savedsessions.json";
 
         public Session()
         {
             //Note: Set environment variables through cmd, e.g. "setx FACE_SUBSCRIPTION_KEY [api key]"
-            SUBSCRIPTION_KEY = Environment.GetEnvironmentVariable("FACE_SUBSCRIPTION_KEY");
-            ENDPOINT = Environment.GetEnvironmentVariable("FACE_ENDPOINT");
+            var key = Environment.GetEnvironmentVariable("FACE_SUBSCRIPTION_KEY");
+            var endpoint = Environment.GetEnvironmentVariable("FACE_ENDPOINT");
 
-            AuthenticateSession(ENDPOINT, SUBSCRIPTION_KEY);
+            AuthenticateSession(endpoint, key);
         }
 
         //Authenticate Client

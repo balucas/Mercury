@@ -10,7 +10,6 @@ namespace API
 {
     public class AudienceFrame
     {
-        //private readonly Stream _imgStream;
         public string Time { get; set; }
         public double Anger { get; set; } = 0;
         public double Contempt { get; set; } = 0;
