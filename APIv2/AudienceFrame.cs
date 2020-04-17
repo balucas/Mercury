@@ -20,9 +20,12 @@ namespace API
         public double Sadness { get; set; } = 0;
         public double Surprise { get; set; } = 0;
 
+        //Extract face features from image with Azure FaceApi
         public async Task Detect(IFaceClient client, byte[] imgBytes, string time)
         {
             Time = time;
+
+            //API call
             IList<DetectedFace> faceList = await client.Face.DetectWithStreamAsync(
                 new MemoryStream(imgBytes),
                 returnFaceAttributes: new List<FaceAttributeType>
@@ -36,6 +39,7 @@ namespace API
 
             int faceCount = faceList.Count;
 
+            //Calculate emotion average from detected faces
             foreach (var face in faceList)
             {
                 Anger += face.FaceAttributes.Emotion.Anger / faceCount;
