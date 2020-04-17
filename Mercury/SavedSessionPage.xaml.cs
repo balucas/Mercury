@@ -26,12 +26,12 @@ namespace Mercury
 
     public sealed partial class SavedSessionPage : Page
     {
-        public ObservableCollection<FrameData> FaceData { get; }
+        public ObservableCollection<AudienceFrame> FaceData { get; }
 
         public SavedSessionPage()
         {
             this.InitializeComponent();
-            FaceData = new ObservableCollection<FrameData>();
+            FaceData = new ObservableCollection<AudienceFrame>();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -42,7 +42,7 @@ namespace Mercury
 
             for (int i = 0; i <= 50; i++)
             {
-                FaceData.Add(new FrameData()
+                FaceData.Add(new AudienceFrame("")
                 {
                     Anger = rand.NextDouble(),
                     Contempt = rand.NextDouble(),
@@ -52,7 +52,7 @@ namespace Mercury
                     Neutral = rand.NextDouble(),
                     Sadness = rand.NextDouble(),
                     Surprise = rand.NextDouble(),
-                    Time = i
+                    Time = ""
                 });
             }
 

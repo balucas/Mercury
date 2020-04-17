@@ -10,17 +10,26 @@ namespace API
 {
     public class AudienceFrame
     {
-        private readonly Stream _imgStream;
+        //private readonly Stream _imgStream;
+        public string Time { get; set; }
+        public double Anger { get; set; } = 0;
+        public double Contempt { get; set; } = 0;
+        public double Disgust { get; set; } = 0;
+        public double Fear { get; set; } = 0;
+        public double Happiness { get; set; } = 0;
+        public double Neutral { get; set; } = 0;
+        public double Sadness { get; set; } = 0;
+        public double Surprise { get; set; } = 0;
 
-        public AudienceFrame(byte[] imgBytes)
+        public AudienceFrame(string time)
         {
-            _imgStream = new MemoryStream(imgBytes);
+            Time = time;
         }
 
-        public async Task<FrameData> Detect(IFaceClient client)
+        public async Task Detect(IFaceClient client, byte[] imgBytes)
         {
             IList<DetectedFace> faceList = await client.Face.DetectWithStreamAsync(
-                _imgStream,
+                new MemoryStream(imgBytes),
                 returnFaceAttributes: new List<FaceAttributeType>
                 {
                     FaceAttributeType.Age,
@@ -31,20 +40,18 @@ namespace API
             );
 
             int faceCount = faceList.Count;
-            var res = new FrameData();
 
             foreach (var face in faceList)
             {
-                res.Anger += face.FaceAttributes.Emotion.Anger / faceCount;
-                res.Contempt += face.FaceAttributes.Emotion.Contempt / faceCount;
-                res.Disgust += face.FaceAttributes.Emotion.Disgust / faceCount;
-                res.Fear += face.FaceAttributes.Emotion.Fear / faceCount;
-                res.Happiness += face.FaceAttributes.Emotion.Happiness / faceCount;
-                res.Neutral += face.FaceAttributes.Emotion.Neutral / faceCount;
-                res.Sadness += face.FaceAttributes.Emotion.Sadness / faceCount;
-                res.Surprise += face.FaceAttributes.Emotion.Surprise / faceCount;
+                Anger += face.FaceAttributes.Emotion.Anger / faceCount;
+                Contempt += face.FaceAttributes.Emotion.Contempt / faceCount;
+                Disgust += face.FaceAttributes.Emotion.Disgust / faceCount;
+                Fear += face.FaceAttributes.Emotion.Fear / faceCount;
+                Happiness += face.FaceAttributes.Emotion.Happiness / faceCount;
+                Neutral += face.FaceAttributes.Emotion.Neutral / faceCount;
+                Sadness += face.FaceAttributes.Emotion.Sadness / faceCount;
+                Surprise += face.FaceAttributes.Emotion.Surprise / faceCount;
             }
-            return res;
         }
     }
 }

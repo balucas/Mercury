@@ -125,7 +125,7 @@ namespace Mercury
 			{
 				TestChart.Add(new MoreTestChartData()
 				{
-					Time = date.Second,
+					Time = "",
 					Var1 = (double) rnd.Next(1, 100) / 100,
 					Var2 = (double)rnd.Next(1, 100) / 100
 				});
@@ -249,6 +249,7 @@ namespace Mercury
 				RecordingButton.Content = "OFF";
 				_activeRecording = false;
 				_timer.Stop();
+				SaveSession();
 
 			}
 		}

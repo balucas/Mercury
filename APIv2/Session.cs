@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -21,7 +22,9 @@ namespace API
         private string ENDPOINT;
 
         private IFaceClient Client;
-        private List<FrameData> _frameDatas;
+        private List<AudienceFrame> _audienceFrames;
+
+        private const string FileName = "savedsessions.json";
 
         public Session()
         {
@@ -36,24 +39,45 @@ namespace API
         private void AuthenticateSession(string endpoint, string key)
         {
             Client = new FaceClient(new ApiKeyServiceClientCredentials(key)) { Endpoint = endpoint };
-            _frameDatas = new List<FrameData>();
+            _audienceFrames = new List<AudienceFrame>();
         }
 
-        public async Task<FrameData> CreateChartItem(byte[] imageBytes, string time)
+        public async Task<AudienceFrame> CreateChartItem(byte[] imageBytes, string time)
         {
-            AudienceFrame snapshot = new AudienceFrame(imageBytes);
+            AudienceFrame snapshot = new AudienceFrame(time);
 
             //Store frame data
-            var frame = await snapshot.Detect(Client);
-            frame.Time = time;
-            _frameDatas.Add(frame);
+            await snapshot.Detect(Client, imageBytes);
+            _audienceFrames.Add(snapshot);
 
-            return frame;
+            return snapshot;
+        }
+
+        public static List<SavedSession> RetrieveSavedSessions(string path)
+        {
+            List<SavedSession> res;
+            
+            //Attempt to read save file
+            try
+            {
+                //Read file and deserialize
+                res = JsonSerializer.Deserialize<List<SavedSession>>(File.ReadAllText(path + "\\" + FileName));
+            }
+            catch
+            {
+                //Save date doesn't exist, create new
+                res = new List<SavedSession>();
+            }
+
+            return res;
         }
 
         public void SaveSession(string path)
         {
-            const string FileName = "savedsessions.json";
+            //no data, nothing to save
+            if (_audienceFrames.Count == 0)
+                return;
+
             List<SavedSession> savedata;
 
             //Attempt to read file if already exists
@@ -62,14 +86,17 @@ namespace API
                 //Read file and deserialize
                 savedata = JsonSerializer.Deserialize<List<SavedSession>>(File.ReadAllText(path + "\\" + FileName));
             }
-            catch (Exception ex)
+            catch
             {
-                //Save data doesnt exist, create new
+                //Save data doesn't exist, create new
                 savedata = new List<SavedSession>();
             }
-
+            if(savedata.Count == 0)
+            {
+                Debug.WriteLine("ERROR SAVEDATA EMPTY ERROR");
+            }
             //Add current session data and serialize
-            savedata.Add(new SavedSession(_frameDatas));
+            savedata.Add(new SavedSession(_audienceFrames));
             string jsonString = JsonSerializer.Serialize(savedata);
 
             //save to file
@@ -79,29 +106,15 @@ namespace API
     }
 
     //Class to attach timestamp to sessiondata for json serialization
-    class SavedSession
+    public struct SavedSession
     {
         public DateTime TimeStamp { get; set; }
-        public List<FrameData> SessionData { get; set; }
+        public List<AudienceFrame> SessionData { get; set; }
 
-        public SavedSession(List<FrameData> data)
+        public SavedSession(List<AudienceFrame> data)
         {
             TimeStamp = DateTime.Now;
             SessionData = data;
         }
-    }
-
-    //PLACEHOLDER CHART ITEM
-    public class FrameData
-    {
-        public string Time { get; set; }
-        public double Anger { get; set; } = 0;
-        public double Contempt { get; set; } = 0;
-        public double Disgust { get; set; } = 0;
-        public double Fear { get; set; } = 0;
-        public double Happiness { get; set; } = 0;
-        public double Neutral { get; set; } = 0;
-        public double Sadness { get; set; } = 0;
-        public double Surprise { get; set; } = 0;
     }
 }
