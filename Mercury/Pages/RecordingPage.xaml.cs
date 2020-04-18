@@ -98,8 +98,8 @@ namespace Mercury.Pages
 		// toggles whether the graph panel is shown
 		private void Button_Toggle_Pane(object sender, RoutedEventArgs e)
 		{
-			TogglePaneButton.Content = MainSplitView.IsPaneOpen ? "Hide Graphs" : "Show Graphs";
 			MainSplitView.IsPaneOpen = !MainSplitView.IsPaneOpen;
+			TogglePaneButton.Content = MainSplitView.IsPaneOpen ? "Hide Graphs" : "Show Graphs";
 		}
 
 		// starts/stops recording
