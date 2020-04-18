@@ -11,21 +11,32 @@
     <Page.Resources>
         <Style TargetType="Button">
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="40"/>
-            <Setter Property="Width" Value="500"/>
-            <Setter Property="Margin" Value="20"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="Margin" Value="20,20,0,0"/>
+            <Setter Property="Background" Value="LightSlateGray"/>
+            <Setter Property="Foreground" Value="White"/>
         </Style>
     </Page.Resources>
     <Grid>
-        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+        <StackPanel Orientation="Vertical"
+                    VerticalAlignment="Center">
             <TextBlock Text="MERCURY"
-                       FontSize="60"
+                       FontSize="65"
                        HorizontalAlignment="Center"
-                       Padding="50"/>
-            <Button Content="Begin New Session"
+                       VerticalAlignment="Center"
+                       Padding="0"/>
+            <TextBlock Text="Real-Time Audience Analytics"
+                       FontSize="40"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,30"/>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <Button Content="New Session"
                     Click="Begin_Click"/>
-            <Button Content="View Previous Sessions"
+                <Button Content="Saved Sessions"
                     Click="ViewPrev_Click"/>
+            </StackPanel>
             <Button Content="Exit"
                     Click="Exit_Click"/>
         </StackPanel>
