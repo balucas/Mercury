@@ -40,14 +40,14 @@
 						                CategoryValueMemberPath="Time"
 						                x:Name="Chart1">
 							<qc:SerialChart.Graphs>
-								<qc:LineGraph x:Name="G1_Anger" Title="Anger" ValueMemberPath="Anger" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G1_Contempt" Title="Contempt" ValueMemberPath="Contempt" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G1_Disgust" Title="Disgust" ValueMemberPath="Disgust" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G1_Fear" Title="Fear" ValueMemberPath="Fear" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G1_Happiness" Title="Happiness" ValueMemberPath="Happiness" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G1_Neutral" Title="Neutral" ValueMemberPath="Neutral" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G1_Sadness" Title="Sadness" ValueMemberPath="Sadness" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G1_Surprise" Title="Surprise" ValueMemberPath="Surprise" Visibility="Collapsed" />
+								<qc:LineGraph Title="Anger" ValueMemberPath="Anger" Visibility="Collapsed" />
+								<qc:LineGraph Title="Contempt" ValueMemberPath="Contempt" Visibility="Collapsed" />
+								<qc:LineGraph Title="Disgust" ValueMemberPath="Disgust" Visibility="Collapsed" />
+								<qc:LineGraph Title="Fear" ValueMemberPath="Fear" Visibility="Collapsed" />
+								<qc:LineGraph Title="Happiness" ValueMemberPath="Happiness" Visibility="Collapsed" />
+								<qc:LineGraph Title="Neutral" ValueMemberPath="Neutral" Visibility="Collapsed" />
+								<qc:LineGraph Title="Sadness" ValueMemberPath="Sadness" Visibility="Collapsed" />
+								<qc:LineGraph Title="Surprise" ValueMemberPath="Surprise" Visibility="Collapsed" />
 							</qc:SerialChart.Graphs>
 						</qc:SerialChart>
 					</Border>
@@ -66,14 +66,14 @@
 						                CategoryValueMemberPath="Time"
 						                x:Name="Chart2">
 							<qc:SerialChart.Graphs>
-								<qc:LineGraph x:Name="G2_Anger" Title="Anger" ValueMemberPath="Anger" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G2_Contempt" Title="Contempt" ValueMemberPath="Contempt" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G2_Disgust" Title="Disgust" ValueMemberPath="Disgust" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G2_Fear" Title="Fear" ValueMemberPath="Fear" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G2_Happiness" Title="Happiness" ValueMemberPath="Happiness" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G2_Neutral" Title="Neutral" ValueMemberPath="Neutral" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G2_Sadness" Title="Sadness" ValueMemberPath="Sadness" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G2_Surprise" Title="Surprise" ValueMemberPath="Surprise" Visibility="Collapsed" />
+								<qc:LineGraph Title="Anger" ValueMemberPath="Anger" Visibility="Collapsed" />
+								<qc:LineGraph Title="Contempt" ValueMemberPath="Contempt" Visibility="Collapsed" />
+								<qc:LineGraph Title="Disgust" ValueMemberPath="Disgust" Visibility="Collapsed" />
+								<qc:LineGraph Title="Fear" ValueMemberPath="Fear" Visibility="Collapsed" />
+								<qc:LineGraph Title="Happiness" ValueMemberPath="Happiness" Visibility="Collapsed" />
+								<qc:LineGraph Title="Neutral" ValueMemberPath="Neutral" Visibility="Collapsed" />
+								<qc:LineGraph Title="Sadness" ValueMemberPath="Sadness" Visibility="Collapsed" />
+								<qc:LineGraph Title="Surprise" ValueMemberPath="Surprise" Visibility="Collapsed" />
 							</qc:SerialChart.Graphs>
 						</qc:SerialChart>
 					</Border>
@@ -92,14 +92,14 @@
 						                CategoryValueMemberPath="Time"
 						                x:Name="Chart3">
 							<qc:SerialChart.Graphs>
-								<qc:LineGraph x:Name="G3_Anger" Title="Anger" ValueMemberPath="Anger" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G3_Contempt" Title="Contempt" ValueMemberPath="Contempt" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G3_Disgust" Title="Disgust" ValueMemberPath="Disgust" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G3_Fear" Title="Fear" ValueMemberPath="Fear" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G3_Happiness" Title="Happiness" ValueMemberPath="Happiness" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G3_Neutral" Title="Neutral" ValueMemberPath="Neutral" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G3_Sadness" Title="Sadness" ValueMemberPath="Sadness" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G3_Surprise" Title="Surprise" ValueMemberPath="Surprise" Visibility="Collapsed" />
+								<qc:LineGraph Title="Anger" ValueMemberPath="Anger" Visibility="Collapsed" />
+								<qc:LineGraph Title="Contempt" ValueMemberPath="Contempt" Visibility="Collapsed" />
+								<qc:LineGraph Title="Disgust" ValueMemberPath="Disgust" Visibility="Collapsed" />
+								<qc:LineGraph Title="Fear" ValueMemberPath="Fear" Visibility="Collapsed" />
+								<qc:LineGraph Title="Happiness" ValueMemberPath="Happiness" Visibility="Collapsed" />
+								<qc:LineGraph Title="Neutral" ValueMemberPath="Neutral" Visibility="Collapsed" />
+								<qc:LineGraph Title="Sadness" ValueMemberPath="Sadness" Visibility="Collapsed" />
+								<qc:LineGraph Title="Surprise" ValueMemberPath="Surprise" Visibility="Collapsed" />
 							</qc:SerialChart.Graphs>
 						</qc:SerialChart>
 					</Border>
@@ -118,14 +118,14 @@
 						                CategoryValueMemberPath="Time"
 						                x:Name="Chart4">
 							<qc:SerialChart.Graphs>
-								<qc:LineGraph x:Name="G4_Anger" Title="Anger" ValueMemberPath="Anger" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G4_Contempt" Title="Contempt" ValueMemberPath="Contempt" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G4_Disgust" Title="Disgust" ValueMemberPath="Disgust" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G4_Fear" Title="Fear" ValueMemberPath="Fear" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G4_Happiness" Title="Happiness" ValueMemberPath="Happiness" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G4_Neutral" Title="Neutral" ValueMemberPath="Neutral" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G4_Sadness" Title="Sadness" ValueMemberPath="Sadness" Visibility="Collapsed" />
-								<qc:LineGraph x:Name="G4_Surprise" Title="Surprise" ValueMemberPath="Surprise" Visibility="Collapsed" />
+								<qc:LineGraph Title="Anger" ValueMemberPath="Anger" Visibility="Collapsed" />
+								<qc:LineGraph Title="Contempt" ValueMemberPath="Contempt" Visibility="Collapsed" />
+								<qc:LineGraph Title="Disgust" ValueMemberPath="Disgust" Visibility="Collapsed" />
+								<qc:LineGraph Title="Fear" ValueMemberPath="Fear" Visibility="Collapsed" />
+								<qc:LineGraph Title="Happiness" ValueMemberPath="Happiness" Visibility="Collapsed" />
+								<qc:LineGraph Title="Neutral" ValueMemberPath="Neutral" Visibility="Collapsed" />
+								<qc:LineGraph Title="Sadness" ValueMemberPath="Sadness" Visibility="Collapsed" />
+								<qc:LineGraph Title="Surprise" ValueMemberPath="Surprise" Visibility="Collapsed" />
 							</qc:SerialChart.Graphs>
 						</qc:SerialChart>
 					</Border>
