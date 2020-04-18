@@ -26,7 +26,7 @@ namespace Mercury
 	public sealed partial class StatisticsPage : Page
 	{
 		public List<SavedSession> SelectedSessions;
-		public ObservableCollection<AudienceFrame> FaceData { get; set; }
+		public ObservableCollection<AudienceFrame> FaceData { get; }
 
 		public StatisticsPage()
 		{
@@ -39,6 +39,11 @@ namespace Mercury
 			SelectedSessions = e.Parameter as List<SavedSession>;
 			PopulateSessionList();
 			PopulateGraphs();
+		}
+
+		private async void Page_Loaded(object sender, RoutedEventArgs e)
+		{
+			DataContext = this;
 		}
 
 		private void Button_Back(object sender, RoutedEventArgs e)
@@ -63,7 +68,7 @@ namespace Mercury
 
 		private void PopulateGraphs()
 		{
-			FaceData = new ObservableCollection<AudienceFrame>();
+			FaceData.Clear();
 			var audienceFrames = (SessionListView.SelectedItem as SavedSession)?.SessionData;
 			if (audienceFrames != null)
 			{

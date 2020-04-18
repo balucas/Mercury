@@ -11,6 +11,7 @@
 
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+
 	<SplitView x:Name="MainSplitView"
 	           IsPaneOpen="True"
 	           DisplayMode="Inline"
@@ -26,17 +27,17 @@
 					<RowDefinition Height="1*" />
 				</Grid.RowDefinitions>
 
-				<StackPanel Padding="10" >
+				<StackPanel Padding="10" Spacing="10" Orientation="Horizontal" HorizontalAlignment="Center" >
 					<ComboBox 
-						x:Name="GraphOneSelection" 
-						Width="320" 
+						x:Name="GraphOneSelection"
+						Width="120"
+						VerticalAlignment="Center"
 						HorizontalAlignment="Center" 
 						SelectionChanged="UpdateGraphOneSelection"></ComboBox>
-					<Border  MinHeight="200" HorizontalAlignment="Center">
+					<Border  MinWidth="200" MinHeight="50" HorizontalAlignment="Center">
 						<qc:SerialChart LegendVisibility="Collapsed"
 						                DataSource="{Binding FaceData}"
 						                CategoryValueMemberPath="Time"
-						                MaxHeight="125"
 						                x:Name="Chart1">
 							<qc:SerialChart.Graphs>
 								<qc:LineGraph x:Name="G1_Anger" Title="Anger" ValueMemberPath="Anger" Visibility="Collapsed" />
@@ -52,17 +53,17 @@
 					</Border>
 				</StackPanel>
 
-				<StackPanel Grid.Row="1" Padding="10">
+				<StackPanel Grid.Row="1" Padding="10" Spacing="10" Orientation="Horizontal" HorizontalAlignment="Center">
 					<ComboBox 
 						x:Name="GraphTwoSelection" 
-						Width="320" 
+						Width="120" 
 						HorizontalAlignment="Center"
+						VerticalAlignment="Center"
 						SelectionChanged="UpdateGraphTwoSelection"></ComboBox>
-					<Border  MinHeight="200" HorizontalAlignment="Center">
+					<Border MinWidth="200" MinHeight="50" HorizontalAlignment="Center">
 						<qc:SerialChart LegendVisibility="Collapsed"
 						                DataSource="{Binding FaceData}"
 						                CategoryValueMemberPath="Time"
-						                MaxHeight="125"
 						                x:Name="Chart2">
 							<qc:SerialChart.Graphs>
 								<qc:LineGraph x:Name="G2_Anger" Title="Anger" ValueMemberPath="Anger" Visibility="Collapsed" />
@@ -78,17 +79,17 @@
 					</Border>
 				</StackPanel>
 
-				<StackPanel Grid.Row="2" Padding="10">
+				<StackPanel Grid.Row="2" Padding="10" Spacing="10" Orientation="Horizontal" HorizontalAlignment="Center">
 					<ComboBox 
 						x:Name="GraphThreeSelection" 
-						Width="320" 
+						Width="120" 
 						HorizontalAlignment="Center"
+						VerticalAlignment="Center"
 						SelectionChanged="UpdateGraphThreeSelection "></ComboBox>
-					<Border  MinHeight="200" HorizontalAlignment="Center">
+					<Border  MinWidth="200" MinHeight="50" HorizontalAlignment="Center">
 						<qc:SerialChart LegendVisibility="Collapsed"
 						                DataSource="{Binding FaceData}"
 						                CategoryValueMemberPath="Time"
-						                MaxHeight="125"
 						                x:Name="Chart3">
 							<qc:SerialChart.Graphs>
 								<qc:LineGraph x:Name="G3_Anger" Title="Anger" ValueMemberPath="Anger" Visibility="Collapsed" />
@@ -104,17 +105,17 @@
 					</Border>
 				</StackPanel>
 
-				<StackPanel Grid.Row="3" Padding="10">
+				<StackPanel Grid.Row="3" Padding="10" Spacing="10" Orientation="Horizontal" HorizontalAlignment="Center">
 					<ComboBox 
 						x:Name="GraphFourSelection" 
-						Width="320" 
+						Width="120" 
 						HorizontalAlignment="Center"
+						VerticalAlignment="Center"
 						SelectionChanged="UpdateGraphFourSelection"></ComboBox>
-					<Border  MinHeight="200" HorizontalAlignment="Center">
+					<Border  MinWidth="200" MinHeight="50" HorizontalAlignment="Center">
 						<qc:SerialChart LegendVisibility="Collapsed"
 						                DataSource="{Binding FaceData}"
 						                CategoryValueMemberPath="Time"
-						                MaxHeight="125"
 						                x:Name="Chart4">
 							<qc:SerialChart.Graphs>
 								<qc:LineGraph x:Name="G4_Anger" Title="Anger" ValueMemberPath="Anger" Visibility="Collapsed" />
@@ -136,13 +137,12 @@
 			<Border Background="Black">
 				<CaptureElement Name="PreviewControl" Stretch="Uniform" />
 			</Border>
-			<Image x:Name="ImagePreview" Height="300" Width="400" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,40" ></Image>
-			<CommandBar OverflowButtonVisibility="Collapsed" Height="40" IsSticky="True">
+			<CommandBar OverflowButtonVisibility="Collapsed" IsSticky="True">
 				<AppBarButton x:Name="RecordingButton" Content="Start Recording" Click="Button_Toggle_Recording" Width="100"></AppBarButton>
 				<AppBarButton Content="Exit" Click="Exit_Click" Width="100"></AppBarButton>
-				<AppBarButton x:Name="TogglePaneButton" Content="Hide Graphs" Click="Button_Toggle_Pane" Width="100" ></AppBarButton>
+				<AppBarButton x:Name="TogglePaneButton" Content="Hide Graphs" Click="Button_Toggle_Pane" Margin="0,0,10,0" Width="100" ></AppBarButton>
 				<CommandBar.Content>
-					<TextBlock x:Name="RecordingDuration" Text="Duration: Not Started" FontSize="20" Margin="5"/>
+					<TextBlock x:Name="RecordingDuration" Text="Duration: Not Started" Margin="10"/>
 				</CommandBar.Content>
 			</CommandBar>
 		</Grid>
