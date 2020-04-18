@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Media.Capture;
 using Windows.Media.MediaProperties;
 using Windows.Storage.Streams;
-using Windows.UI.Xaml.Media.Imaging;
 
-namespace Mercury
+namespace Mercury.Classes
 {
 	public class MediaControls
 	{
