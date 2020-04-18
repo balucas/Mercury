@@ -80,7 +80,11 @@
 		                         Grid.Row="0"
 		                         Margin="5">
 			<quickCharts:SerialChart.Graphs>
-				<quickCharts:LineGraph x:Name="Anger" Title="Anger" ValueMemberPath="Anger" />
+				<quickCharts:LineGraph Title="Anger" ValueMemberPath="Anger">
+					<quickCharts:LineGraph.Brush>
+						<SolidColorBrush Color="Red" />
+					</quickCharts:LineGraph.Brush>
+				</quickCharts:LineGraph>
 			</quickCharts:SerialChart.Graphs>
 		</quickCharts:SerialChart>
 
@@ -92,7 +96,11 @@
 		                         Grid.Row="1"
 		                         Margin="5">
 			<quickCharts:SerialChart.Graphs>
-				<quickCharts:LineGraph x:Name="Contempt" Title="Contempt" ValueMemberPath="Contempt" />
+				<quickCharts:LineGraph Title="Contempt" ValueMemberPath="Contempt" >
+					<quickCharts:LineGraph.Brush>
+						<SolidColorBrush Color="DeepPink" />
+					</quickCharts:LineGraph.Brush>
+				</quickCharts:LineGraph>
 			</quickCharts:SerialChart.Graphs>
 		</quickCharts:SerialChart>
 
@@ -104,7 +112,11 @@
 		                         Grid.Row="2"
 		                         Margin="5">
 			<quickCharts:SerialChart.Graphs>
-				<quickCharts:LineGraph x:Name="Disgust" Title="Disgust" ValueMemberPath="Disgust" />
+				<quickCharts:LineGraph Title="Disgust" ValueMemberPath="Disgust" >
+					<quickCharts:LineGraph.Brush>
+						<SolidColorBrush Color="Black" />
+					</quickCharts:LineGraph.Brush>
+				</quickCharts:LineGraph>
 			</quickCharts:SerialChart.Graphs>
 		</quickCharts:SerialChart>
 
@@ -116,7 +128,11 @@
 		                         Grid.Row="3"
 		                         Margin="5">
 			<quickCharts:SerialChart.Graphs>
-				<quickCharts:LineGraph x:Name="Fear" Title="Fear" ValueMemberPath="Fear" />
+				<quickCharts:LineGraph Title="Fear" ValueMemberPath="Fear" >
+					<quickCharts:LineGraph.Brush>
+						<SolidColorBrush Color="Purple" />
+					</quickCharts:LineGraph.Brush>
+				</quickCharts:LineGraph>
 			</quickCharts:SerialChart.Graphs>
 		</quickCharts:SerialChart>
 
@@ -128,7 +144,11 @@
 		                         Grid.Row="0"
 		                         Margin="5">
 			<quickCharts:SerialChart.Graphs>
-				<quickCharts:LineGraph x:Name="Happiness" Title="Happiness" ValueMemberPath="Happiness" />
+				<quickCharts:LineGraph Title="Happiness" ValueMemberPath="Happiness" >
+					<quickCharts:LineGraph.Brush>
+						<SolidColorBrush Color="Green" />
+					</quickCharts:LineGraph.Brush>
+				</quickCharts:LineGraph>
 			</quickCharts:SerialChart.Graphs>
 		</quickCharts:SerialChart>
 
@@ -140,7 +160,11 @@
 		                         Grid.Row="1"
 		                         Margin="5">
 			<quickCharts:SerialChart.Graphs>
-				<quickCharts:LineGraph x:Name="Neutral" Title="Neutral" ValueMemberPath="Neutral" />
+				<quickCharts:LineGraph Title="Neutral" ValueMemberPath="Neutral" >
+					<quickCharts:LineGraph.Brush>
+						<SolidColorBrush Color="Gray" />
+					</quickCharts:LineGraph.Brush>
+				</quickCharts:LineGraph>
 			</quickCharts:SerialChart.Graphs>
 		</quickCharts:SerialChart>
 
@@ -152,7 +176,11 @@
 		                         Grid.Row="2"
 		                         Margin="5">
 			<quickCharts:SerialChart.Graphs>
-				<quickCharts:LineGraph x:Name="Sadness" Title="Sadness" ValueMemberPath="Sadness" />
+				<quickCharts:LineGraph Title="Sadness" ValueMemberPath="Sadness" >
+					<quickCharts:LineGraph.Brush>
+						<SolidColorBrush Color="Blue" />
+					</quickCharts:LineGraph.Brush>
+				</quickCharts:LineGraph>
 			</quickCharts:SerialChart.Graphs>
 		</quickCharts:SerialChart>
 
@@ -164,7 +192,11 @@
 		                         Grid.Row="3"
 		                         Margin="5">
 			<quickCharts:SerialChart.Graphs>
-				<quickCharts:LineGraph x:Name="Surprise" Title="Surprise" ValueMemberPath="Surprise" />
+				<quickCharts:LineGraph Title="Surprise" ValueMemberPath="Surprise" >
+					<quickCharts:LineGraph.Brush>
+						<SolidColorBrush Color="OrangeRed" />
+					</quickCharts:LineGraph.Brush>
+				</quickCharts:LineGraph>
 			</quickCharts:SerialChart.Graphs>
 		</quickCharts:SerialChart>
 	</Grid>
