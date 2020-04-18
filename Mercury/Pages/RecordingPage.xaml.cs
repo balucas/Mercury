@@ -57,8 +57,6 @@ namespace Mercury.Pages
 			Session = new Session();
 			FaceData = new ObservableCollection<AudienceFrame>();
 			InitializeGraphs();
-
-			//Application.Current.Resuming += Application_Resuming;
 		}
 
 		private void InitializeGraphs()
@@ -98,7 +96,7 @@ namespace Mercury.Pages
 		// toggles whether the graph panel is shown
 		private void Button_Toggle_Pane(object sender, RoutedEventArgs e)
 		{
-			TogglePaneButton.Content = MainSplitView.IsPaneOpen ? "Hide Graphs" : "Show Graphs";
+			TogglePaneButton.Content = !MainSplitView.IsPaneOpen ? "Hide Graphs" : "Show Graphs";
 			MainSplitView.IsPaneOpen = !MainSplitView.IsPaneOpen;
 		}
 
@@ -127,6 +125,7 @@ namespace Mercury.Pages
 					_status = RecordingStatus.Finished;
 					_timer.Stop();
 					_clock.Stop();
+					MediaControls.StopRecording();
 					SaveSession();
 					break;
 			}
@@ -144,23 +143,12 @@ namespace Mercury.Pages
 		// Return to main menu
 		private void Exit_Click(object sender, RoutedEventArgs e)
 		{
-			if(_status == RecordingStatus.Started)
+			if (_status == RecordingStatus.Started)
 				ToggleRecording();
+			else
+				MediaControls.StopRecording();
+
 			Frame.Navigate(typeof(MainMenu));
-		}
-
-		//// Ensure Video control updates properly after losing focus
-		//private async void Application_Resuming(object sender, object o)
-		//{
-		//	await StartVideoAsync();
-		//}
-
-		// Ensures the video control stops correctly
-		protected override void OnNavigatedFrom(NavigationEventArgs e)
-		{
-			MediaControls.StopRecording();
-			_timer.Stop();
-			_clock.Stop();
 		}
 
 		// Initializes and begins the video capture
