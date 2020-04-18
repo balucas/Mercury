@@ -24,30 +24,27 @@ namespace Mercury
     /// </summary>
     public sealed partial class MainMenu : Page
     {
-	    public List<SavedSession> SessionList;
-        public MainMenu()
+	    public MainMenu()
         {
             this.InitializeComponent();
-            SessionList = new List<SavedSession>();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            SessionList = e.Parameter as List<SavedSession>;
-        }
-
+        // Go to Recording page
         private void Begin_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(RecordingPage), SessionList);
-        }
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            CoreApplication.Exit();
+            Frame.Navigate(typeof(RecordingPage));
         }
 
+        // Go to Session List
         private void ViewPrev_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(SavedSessionPage), SessionList);
+            Frame.Navigate(typeof(SavedSessionPage));
+        }
+
+        // Exit application
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+	        CoreApplication.Exit();
         }
     }
 }

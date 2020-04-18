@@ -67,7 +67,6 @@ namespace Mercury
 		public async void StopRecording()
 		{
 			await Video.StopPreviewAsync();
-
 		}
 	}
 

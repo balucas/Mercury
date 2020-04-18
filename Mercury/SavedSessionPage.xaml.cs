@@ -28,7 +28,7 @@ namespace Mercury
 
     public sealed partial class SavedSessionPage : Page
     {
-        public List<SavedSession> SavedSessions { get; }
+	    public List<SavedSession> SavedSessions;
 
         public SavedSessionPage()
         {
@@ -36,14 +36,9 @@ namespace Mercury
             SavedSessions = Session.RetrieveSavedSessions(Windows.Storage.ApplicationData.Current.LocalFolder.Path);
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private void Button_Back(object sender, RoutedEventArgs e)
         {
-            //SessionList.SelectedItems;
-        }
-
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
+	        Frame.GoBack();
         }
 
         private void View_Stats(object sender, RoutedEventArgs e)

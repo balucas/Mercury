@@ -21,13 +21,15 @@ namespace Mercury
 	/// An empty page that can be used on its own or navigated to within a Frame.
 	/// </summary>
 
+	// 
 	enum RecordingStatus
 	{
 		NotStarted,
-		Started2,
+		Started,
 		Finished
 	}
 
+	// Enum used for Creating ComboBox Items
 	enum GraphData
 	{
 		Anger,
@@ -42,15 +44,16 @@ namespace Mercury
 
 	public sealed partial class RecordingPage : Page
 	{
-
 		private DispatcherTimer _timer;
 		private DispatcherTimer _clock;
 		private DateTime _startDate;
 		private string _time;
+		
 		private RecordingStatus _status;
 		public Session Session;
 		public MediaControls MediaControls;
-		public List<SavedSession> SessionList;
+		//public List<SavedSession> SavedSessions;
+		
 		public ObservableCollection<AudienceFrame> FaceData { get; }
 
 		public RecordingPage()
@@ -62,11 +65,8 @@ namespace Mercury
 			MediaControls = new MediaControls();
 			_status = RecordingStatus.NotStarted;
 			Session = new Session();
-			
 			FaceData = new ObservableCollection<AudienceFrame>();
-
 			InitializeGraphs();
-
 			Application.Current.Resuming += Application_Resuming;
 		}
 
@@ -112,16 +112,21 @@ namespace Mercury
 
 		private void Button_Toggle_Recording(object sender, RoutedEventArgs e)
 		{
+			ToggleRecording();
+		}
+
+		private void ToggleRecording()
+		{
 			switch (_status)
 			{
 				case RecordingStatus.NotStarted:
 					RecordingButton.Content = "Stop Recording";
-					_status = RecordingStatus.Started2;
+					_status = RecordingStatus.Started;
 					_timer.Start();
 					_clock.Start();
 					_startDate = DateTime.Now;
 					break;
-				case RecordingStatus.Started2:
+				case RecordingStatus.Started:
 					RecordingButton.Content = "Recording Over";
 					_status = RecordingStatus.Finished;
 					_timer.Stop();
@@ -139,45 +144,44 @@ namespace Mercury
 			Debug.WriteLine("Local storage: " + testfolder.Path);
 			Session.SaveSession(testfolder.Path);
 		}
+
+		// Return to main menu
 		private void Exit_Click(object sender, RoutedEventArgs e)
 		{
-			Frame.Navigate(typeof(MainMenu), SessionList);
+			if(_status == RecordingStatus.Started)
+				ToggleRecording();
+			Frame.Navigate(typeof(MainMenu));
 		}
 
+		// Ensure Video control updates properly if lost focus
 		private async void Application_Resuming(object sender, object o)
 		{
 			await StartVideoAsync();
 		}
 
-		protected override void OnNavigatedTo(NavigationEventArgs e)
-		{
-			SessionList = e.Parameter as List<SavedSession>;
-		}
-
+		// Ensures the video control stops correctly
 		protected override void OnNavigatedFrom(NavigationEventArgs e)
 		{
-			StopVideo();
+			MediaControls.StopRecording();
 			_timer.Stop();
 			_clock.Stop();
 		}
 
+		// Initializes and begins the video capture
 		private async Task StartVideoAsync()
 		{
 			PreviewControl.Source = await MediaControls.InitializeCamera();
 			MediaControls.StartRecording();
 		}
 
-		private void StopVideo()
-		{
-			MediaControls.StopRecording();
-		}
-
+		// Captures a frame from video and converts it into a byte array
 		private async Task<byte[]> TakePhoto()
 		{
 			//ImagePreview.Source = await MediaControls.CaptureImageToBitMap();
 			return await MediaControls.CaptureImageToByteArray();
 		}
 
+		// Fills a combobox with items
 		private void PopulateComboBox(ComboBox comboBox)
 		{
 			foreach (var value in Enum.GetValues(typeof(GraphData)))
@@ -186,223 +190,31 @@ namespace Mercury
 			}
 		}
 
+		// Adjusts the graphs in the page to the data selected in the combo boxes
 		private void UpdateGraphOneSelection(object sender, SelectionChangedEventArgs e)
 		{
-			var comboBox = sender as ComboBox;
-
-			G1_Anger.Visibility = Visibility.Collapsed;
-			G1_Contempt.Visibility = Visibility.Collapsed;
-			G1_Disgust.Visibility = Visibility.Collapsed;
-			G1_Fear.Visibility = Visibility.Collapsed;
-			G1_Happiness.Visibility = Visibility.Collapsed;
-			G1_Neutral.Visibility = Visibility.Collapsed;
-			G1_Sadness.Visibility = Visibility.Collapsed;
-			G1_Surprise.Visibility = Visibility.Collapsed;
-
-
-			switch (comboBox.SelectedItem)
-			{
-				case GraphData.Anger:
-					G1_Anger.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Contempt:
-					G1_Contempt.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Disgust:
-					G1_Disgust.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Fear:
-					G1_Fear.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Happiness:
-					G1_Happiness.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Neutral:
-					G1_Neutral.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Sadness:
-					G1_Sadness.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Surprise:
-					G1_Surprise.Visibility = Visibility.Visible;
-					break;
-				default:
-					G1_Anger.Visibility = Visibility.Visible;
-					break;
-			}
+			ComboBox comboBox = sender as ComboBox;
+			UpdateGraphSelection(comboBox, Chart1);
 		}
-
 		private void UpdateGraphTwoSelection(object sender, SelectionChangedEventArgs e)
 		{
-			var comboBox = sender as ComboBox;
-
-			G2_Anger.Visibility = Visibility.Collapsed;
-			G2_Contempt.Visibility = Visibility.Collapsed;
-			G2_Disgust.Visibility = Visibility.Collapsed;
-			G2_Fear.Visibility = Visibility.Collapsed;
-			G2_Happiness.Visibility = Visibility.Collapsed;
-			G2_Neutral.Visibility = Visibility.Collapsed;
-			G2_Sadness.Visibility = Visibility.Collapsed;
-			G2_Surprise.Visibility = Visibility.Collapsed;
-
-
-			switch (comboBox.SelectedItem)
-			{
-				case GraphData.Anger:
-					G2_Anger.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Contempt:
-					G2_Contempt.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Disgust:
-					G2_Disgust.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Fear:
-					G2_Fear.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Happiness:
-					G2_Happiness.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Neutral:
-					G2_Neutral.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Sadness:
-					G2_Sadness.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Surprise:
-					G2_Surprise.Visibility = Visibility.Visible;
-					break;
-				default:
-					G2_Anger.Visibility = Visibility.Visible;
-					break;
-			}
+			ComboBox comboBox = sender as ComboBox;
+			UpdateGraphSelection(comboBox, Chart2);
 		}
-
 		private void UpdateGraphThreeSelection(object sender, SelectionChangedEventArgs e)
 		{
-			var comboBox = sender as ComboBox;
-
-			G3_Anger.Visibility = Visibility.Collapsed;
-			G3_Contempt.Visibility = Visibility.Collapsed;
-			G3_Disgust.Visibility = Visibility.Collapsed;
-			G3_Fear.Visibility = Visibility.Collapsed;
-			G3_Happiness.Visibility = Visibility.Collapsed;
-			G3_Neutral.Visibility = Visibility.Collapsed;
-			G3_Sadness.Visibility = Visibility.Collapsed;
-			G3_Surprise.Visibility = Visibility.Collapsed;
-
-
-			switch (comboBox.SelectedItem)
-			{
-				case GraphData.Anger:
-					G3_Anger.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Contempt:
-					G3_Contempt.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Disgust:
-					G3_Disgust.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Fear:
-					G3_Fear.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Happiness:
-					G3_Happiness.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Neutral:
-					G3_Neutral.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Sadness:
-					G3_Sadness.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Surprise:
-					G3_Surprise.Visibility = Visibility.Visible;
-					break;
-				default:
-					G3_Anger.Visibility = Visibility.Visible;
-					break;
-			}
+			ComboBox comboBox = sender as ComboBox;
+			UpdateGraphSelection(comboBox, Chart3);
 		}
-
 		private void UpdateGraphFourSelection(object sender, SelectionChangedEventArgs e)
 		{
-			var comboBox = sender as ComboBox;
-
-			G4_Anger.Visibility = Visibility.Collapsed;
-			G4_Contempt.Visibility = Visibility.Collapsed;
-			G4_Disgust.Visibility = Visibility.Collapsed;
-			G4_Fear.Visibility = Visibility.Collapsed;
-			G4_Happiness.Visibility = Visibility.Collapsed;
-			G4_Neutral.Visibility = Visibility.Collapsed;
-			G4_Sadness.Visibility = Visibility.Collapsed;
-			G4_Surprise.Visibility = Visibility.Collapsed;
-
-
-			switch (comboBox.SelectedItem)
-			{
-				case GraphData.Anger:
-					G4_Anger.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Contempt:
-					G4_Contempt.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Disgust:
-					G4_Disgust.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Fear:
-					G4_Fear.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Happiness:
-					G4_Happiness.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Neutral:
-					G4_Neutral.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Sadness:
-					G4_Sadness.Visibility = Visibility.Visible;
-					break;
-				case GraphData.Surprise:
-					G4_Surprise.Visibility = Visibility.Visible;
-					break;
-				default:
-					G3_Anger.Visibility = Visibility.Visible;
-					break;
-			}
+			ComboBox comboBox = sender as ComboBox;
+			UpdateGraphSelection(comboBox, Chart4);
 		}
 
-
-
-		//public void AdjustGraphOne(string title)
-		//{
-		//	GraphOne = new LineGraph
-		//	{
-		//		Title = title,
-		//		ValueMemberPath = title
-		//	};
-		//}
-		//public void AdjustGraphTwo(string title)
-		//{
-		//	GraphTwo = new LineGraph
-		//	{
-		//		Title = title,
-		//		ValueMemberPath = title
-		//	};
-		//}
-		//public void AdjustGraphThree(string title)
-		//{
-		//	GraphThree = new LineGraph
-		//	{
-		//		Title = title,
-		//		ValueMemberPath = title
-		//	};
-		//}
-		//public void AdjustGraphFour(string title)
-		//{
-		//	GraphFour = new LineGraph
-		//	{
-		//		Title = title,
-		//		ValueMemberPath = title
-		//	};
-		//}
+		private void UpdateGraphSelection(ComboBox comboBox, SerialChart chart)
+		{
+			GraphingTools.UpdateGraph(comboBox, chart);
+		}
 	}
 }

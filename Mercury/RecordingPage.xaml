@@ -36,7 +36,8 @@
 						<qc:SerialChart LegendVisibility="Collapsed"
 						                DataSource="{Binding FaceData}"
 						                CategoryValueMemberPath="Time"
-						                MaxHeight="125">
+						                MaxHeight="125"
+						                x:Name="Chart1">
 							<qc:SerialChart.Graphs>
 								<qc:LineGraph x:Name="G1_Anger" Title="Anger" ValueMemberPath="Anger" Visibility="Collapsed" />
 								<qc:LineGraph x:Name="G1_Contempt" Title="Contempt" ValueMemberPath="Contempt" Visibility="Collapsed" />
@@ -61,7 +62,8 @@
 						<qc:SerialChart LegendVisibility="Collapsed"
 						                DataSource="{Binding FaceData}"
 						                CategoryValueMemberPath="Time"
-						                MaxHeight="125">
+						                MaxHeight="125"
+						                x:Name="Chart2">
 							<qc:SerialChart.Graphs>
 								<qc:LineGraph x:Name="G2_Anger" Title="Anger" ValueMemberPath="Anger" Visibility="Collapsed" />
 								<qc:LineGraph x:Name="G2_Contempt" Title="Contempt" ValueMemberPath="Contempt" Visibility="Collapsed" />
@@ -86,7 +88,8 @@
 						<qc:SerialChart LegendVisibility="Collapsed"
 						                DataSource="{Binding FaceData}"
 						                CategoryValueMemberPath="Time"
-						                MaxHeight="125">
+						                MaxHeight="125"
+						                x:Name="Chart3">
 							<qc:SerialChart.Graphs>
 								<qc:LineGraph x:Name="G3_Anger" Title="Anger" ValueMemberPath="Anger" Visibility="Collapsed" />
 								<qc:LineGraph x:Name="G3_Contempt" Title="Contempt" ValueMemberPath="Contempt" Visibility="Collapsed" />
@@ -111,7 +114,8 @@
 						<qc:SerialChart LegendVisibility="Collapsed"
 						                DataSource="{Binding FaceData}"
 						                CategoryValueMemberPath="Time"
-						                MaxHeight="125">
+						                MaxHeight="125"
+						                x:Name="Chart4">
 							<qc:SerialChart.Graphs>
 								<qc:LineGraph x:Name="G4_Anger" Title="Anger" ValueMemberPath="Anger" Visibility="Collapsed" />
 								<qc:LineGraph x:Name="G4_Contempt" Title="Contempt" ValueMemberPath="Contempt" Visibility="Collapsed" />
@@ -125,44 +129,6 @@
 						</qc:SerialChart>
 					</Border>
 				</StackPanel>
-
-
-				<!--<Border Grid.ColumnSpan="4" Grid.Row="1"
-				        MinHeight="100"
-				        MaxHeight="200"
-				        MinWidth="200">
-
-					<qc:SerialChart LegendVisibility="Collapsed"
-					                DataSource="{Binding TestChart}"
-					                CategoryValueMemberPath="Time">
-						<qc:SerialChart.Graphs>
-							<qc:ColumnGraph Title="Realtime visits" ValueMemberPath="Var1">
-								<qc:ColumnGraph.Brush>
-									<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-										<GradientStop Color="#FF1B956E" Offset="0" />
-										<GradientStop Color="#FF03FDAD" Offset="1" />
-									</LinearGradientBrush>
-								</qc:ColumnGraph.Brush>
-							</qc:ColumnGraph>
-						</qc:SerialChart.Graphs>
-					</qc:SerialChart>
-
-				</Border>
-
-				<Border Grid.Row="2" Grid.ColumnSpan="4" x:Name="NewVisitorsChart"
-				        MinHeight="100"
-				        MaxHeight="200"
-				        MinWidth="200">
-
-					<qc:SerialChart LegendVisibility="Collapsed"
-					                DataSource="{Binding TestChart}"
-					                CategoryValueMemberPath="Time">
-						<qc:SerialChart.Graphs>
-							<qc:ColumnGraph Title="New visitors" ValueMemberPath="Var2" />
-						</qc:SerialChart.Graphs>
-					</qc:SerialChart>
-
-				</Border>-->
 			</Grid>
 		</SplitView.Pane>
 

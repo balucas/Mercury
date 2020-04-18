@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:qc="using:Ailon.QuickCharts"
     xmlns:api="using:API"
-	Loaded="Page_Loaded"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -94,10 +93,10 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Border>
-        <Button 
-            Grid.Row="2"
-            Content="View Statistics"
-            Click="View_Stats"
-            HorizontalAlignment="Center"/>
+		<StackPanel Spacing="50" Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+			<Button Content="Back" Width="150" Click="Button_Back" />
+			<Button Content="View Statistics" Width="150" Click="View_Stats" />
+		</StackPanel>
+        
     </Grid>
 </Page>
