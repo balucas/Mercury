@@ -22,7 +22,7 @@ namespace API
         private IFaceClient Client;
 
         //Audience Data
-        private List<AudienceFrame> _audienceFrames;
+        public List<AudienceFrame> AudienceFrames;
 
         //Define save file name
         private const string FileName = "savedsessions.json";
@@ -40,7 +40,7 @@ namespace API
         private void AuthenticateSession(string endpoint, string key)
         {
             Client = new FaceClient(new ApiKeyServiceClientCredentials(key)) { Endpoint = endpoint };
-            _audienceFrames = new List<AudienceFrame>();
+            AudienceFrames = new List<AudienceFrame>();
         }
 
         public async Task<AudienceFrame> CreateChartItem(byte[] imageBytes, string time)
@@ -49,7 +49,7 @@ namespace API
 
             //Store frame data
             await snapshot.Detect(Client, imageBytes, time);
-            _audienceFrames.Add(snapshot);
+            AudienceFrames.Add(snapshot);
 
             return snapshot;
         }
@@ -78,14 +78,14 @@ namespace API
         public void SaveSession(string path)
         {
             //no data, nothing to save
-            if (_audienceFrames.Count == 0)
+            if (AudienceFrames.Count == 0)
                 return;
 
             List<SavedSession> savedata = Session.RetrieveSavedSessions(path);
 
             //Add current session data and serialize
             SavedSession s = new SavedSession();
-            s.SessionData = _audienceFrames;
+            s.SessionData = AudienceFrames;
             s.TimeStamp = DateTime.Now;
             savedata.Add(s);
 

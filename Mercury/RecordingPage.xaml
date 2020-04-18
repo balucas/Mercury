@@ -1,0 +1,185 @@
+﻿<Page
+	x:Class="Mercury.RecordingPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:qc="using:Ailon.QuickCharts"
+	xmlns:api="using:API"
+	Loaded="Page_Loaded"
+	mc:Ignorable="d"
+
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+	<SplitView x:Name="MainSplitView"
+	           IsPaneOpen="True"
+	           DisplayMode="Inline"
+	           OpenPaneLength="350"
+	           PanePlacement="Right">
+
+		<SplitView.Pane>
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="1*" />
+					<RowDefinition Height="1*" />
+					<RowDefinition Height="1*" />
+					<RowDefinition Height="1*" />
+				</Grid.RowDefinitions>
+
+				<StackPanel Padding="10" >
+					<ComboBox 
+						x:Name="GraphOneSelection" 
+						Width="320" 
+						HorizontalAlignment="Center" 
+						SelectionChanged="UpdateGraphOneSelection"></ComboBox>
+					<Border  MinHeight="200" HorizontalAlignment="Center">
+						<qc:SerialChart LegendVisibility="Collapsed"
+						                DataSource="{Binding FaceData}"
+						                CategoryValueMemberPath="Time"
+						                MaxHeight="125">
+							<qc:SerialChart.Graphs>
+								<qc:LineGraph x:Name="G1_Anger" Title="Anger" ValueMemberPath="Anger" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G1_Contempt" Title="Contempt" ValueMemberPath="Contempt" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G1_Disgust" Title="Disgust" ValueMemberPath="Disgust" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G1_Fear" Title="Fear" ValueMemberPath="Fear" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G1_Happiness" Title="Happiness" ValueMemberPath="Happiness" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G1_Neutral" Title="Neutral" ValueMemberPath="Neutral" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G1_Sadness" Title="Sadness" ValueMemberPath="Sadness" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G1_Surprise" Title="Surprise" ValueMemberPath="Surprise" Visibility="Collapsed" />
+							</qc:SerialChart.Graphs>
+						</qc:SerialChart>
+					</Border>
+				</StackPanel>
+
+				<StackPanel Grid.Row="1" Padding="10">
+					<ComboBox 
+						x:Name="GraphTwoSelection" 
+						Width="320" 
+						HorizontalAlignment="Center"
+						SelectionChanged="UpdateGraphTwoSelection"></ComboBox>
+					<Border  MinHeight="200" HorizontalAlignment="Center">
+						<qc:SerialChart LegendVisibility="Collapsed"
+						                DataSource="{Binding FaceData}"
+						                CategoryValueMemberPath="Time"
+						                MaxHeight="125">
+							<qc:SerialChart.Graphs>
+								<qc:LineGraph x:Name="G2_Anger" Title="Anger" ValueMemberPath="Anger" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G2_Contempt" Title="Contempt" ValueMemberPath="Contempt" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G2_Disgust" Title="Disgust" ValueMemberPath="Disgust" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G2_Fear" Title="Fear" ValueMemberPath="Fear" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G2_Happiness" Title="Happiness" ValueMemberPath="Happiness" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G2_Neutral" Title="Neutral" ValueMemberPath="Neutral" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G2_Sadness" Title="Sadness" ValueMemberPath="Sadness" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G2_Surprise" Title="Surprise" ValueMemberPath="Surprise" Visibility="Collapsed" />
+							</qc:SerialChart.Graphs>
+						</qc:SerialChart>
+					</Border>
+				</StackPanel>
+
+				<StackPanel Grid.Row="2" Padding="10">
+					<ComboBox 
+						x:Name="GraphThreeSelection" 
+						Width="320" 
+						HorizontalAlignment="Center"
+						SelectionChanged="UpdateGraphThreeSelection "></ComboBox>
+					<Border  MinHeight="200" HorizontalAlignment="Center">
+						<qc:SerialChart LegendVisibility="Collapsed"
+						                DataSource="{Binding FaceData}"
+						                CategoryValueMemberPath="Time"
+						                MaxHeight="125">
+							<qc:SerialChart.Graphs>
+								<qc:LineGraph x:Name="G3_Anger" Title="Anger" ValueMemberPath="Anger" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G3_Contempt" Title="Contempt" ValueMemberPath="Contempt" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G3_Disgust" Title="Disgust" ValueMemberPath="Disgust" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G3_Fear" Title="Fear" ValueMemberPath="Fear" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G3_Happiness" Title="Happiness" ValueMemberPath="Happiness" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G3_Neutral" Title="Neutral" ValueMemberPath="Neutral" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G3_Sadness" Title="Sadness" ValueMemberPath="Sadness" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G3_Surprise" Title="Surprise" ValueMemberPath="Surprise" Visibility="Collapsed" />
+							</qc:SerialChart.Graphs>
+						</qc:SerialChart>
+					</Border>
+				</StackPanel>
+
+				<StackPanel Grid.Row="3" Padding="10">
+					<ComboBox 
+						x:Name="GraphFourSelection" 
+						Width="320" 
+						HorizontalAlignment="Center"
+						SelectionChanged="UpdateGraphFourSelection"></ComboBox>
+					<Border  MinHeight="200" HorizontalAlignment="Center">
+						<qc:SerialChart LegendVisibility="Collapsed"
+						                DataSource="{Binding FaceData}"
+						                CategoryValueMemberPath="Time"
+						                MaxHeight="125">
+							<qc:SerialChart.Graphs>
+								<qc:LineGraph x:Name="G4_Anger" Title="Anger" ValueMemberPath="Anger" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G4_Contempt" Title="Contempt" ValueMemberPath="Contempt" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G4_Disgust" Title="Disgust" ValueMemberPath="Disgust" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G4_Fear" Title="Fear" ValueMemberPath="Fear" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G4_Happiness" Title="Happiness" ValueMemberPath="Happiness" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G4_Neutral" Title="Neutral" ValueMemberPath="Neutral" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G4_Sadness" Title="Sadness" ValueMemberPath="Sadness" Visibility="Collapsed" />
+								<qc:LineGraph x:Name="G4_Surprise" Title="Surprise" ValueMemberPath="Surprise" Visibility="Collapsed" />
+							</qc:SerialChart.Graphs>
+						</qc:SerialChart>
+					</Border>
+				</StackPanel>
+
+
+				<!--<Border Grid.ColumnSpan="4" Grid.Row="1"
+				        MinHeight="100"
+				        MaxHeight="200"
+				        MinWidth="200">
+
+					<qc:SerialChart LegendVisibility="Collapsed"
+					                DataSource="{Binding TestChart}"
+					                CategoryValueMemberPath="Time">
+						<qc:SerialChart.Graphs>
+							<qc:ColumnGraph Title="Realtime visits" ValueMemberPath="Var1">
+								<qc:ColumnGraph.Brush>
+									<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+										<GradientStop Color="#FF1B956E" Offset="0" />
+										<GradientStop Color="#FF03FDAD" Offset="1" />
+									</LinearGradientBrush>
+								</qc:ColumnGraph.Brush>
+							</qc:ColumnGraph>
+						</qc:SerialChart.Graphs>
+					</qc:SerialChart>
+
+				</Border>
+
+				<Border Grid.Row="2" Grid.ColumnSpan="4" x:Name="NewVisitorsChart"
+				        MinHeight="100"
+				        MaxHeight="200"
+				        MinWidth="200">
+
+					<qc:SerialChart LegendVisibility="Collapsed"
+					                DataSource="{Binding TestChart}"
+					                CategoryValueMemberPath="Time">
+						<qc:SerialChart.Graphs>
+							<qc:ColumnGraph Title="New visitors" ValueMemberPath="Var2" />
+						</qc:SerialChart.Graphs>
+					</qc:SerialChart>
+
+				</Border>-->
+			</Grid>
+		</SplitView.Pane>
+
+		<Grid>
+			<Border Background="Black">
+				<CaptureElement Name="PreviewControl" Stretch="Uniform" />
+			</Border>
+			<Image x:Name="ImagePreview" Height="300" Width="400" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,40" ></Image>
+			<CommandBar OverflowButtonVisibility="Collapsed" Height="40" IsSticky="True">
+				<AppBarButton x:Name="RecordingButton" Content="Start Recording" Click="Button_Toggle_Recording" Width="100"></AppBarButton>
+				<AppBarButton Content="Exit" Click="Exit_Click" Width="100"></AppBarButton>
+				<AppBarButton x:Name="TogglePaneButton" Content="Hide Graphs" Click="Button_Toggle_Pane" Width="100" ></AppBarButton>
+				<CommandBar.Content>
+					<TextBlock x:Name="RecordingDuration" Text="Duration: Not Started" FontSize="20" Margin="5"/>
+				</CommandBar.Content>
+			</CommandBar>
+		</Grid>
+	</SplitView>
+
+</Page>
