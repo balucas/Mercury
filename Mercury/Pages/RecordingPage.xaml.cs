@@ -31,10 +31,11 @@ namespace Mercury.Pages
 
 	public sealed partial class RecordingPage : Page
 	{
-		private DispatcherTimer Timer { get; }
-		private DispatcherTimer Clock { get; }
-		private Session Session { get; }
-		private MediaControls MediaControls { get; }
+		private readonly DispatcherTimer _timer;
+		private readonly DispatcherTimer _clock;
+		private readonly Session _session;
+		private readonly MediaControls _mediaControls;
+
 		public ObservableCollection<AudienceFrame> FaceData { get; }
 
 		private DateTime _startDate;
@@ -45,14 +46,14 @@ namespace Mercury.Pages
 		{
 			this.InitializeComponent();
 
-			Timer = new DispatcherTimer();
-			Clock = new DispatcherTimer();
-			Timer.Interval = new TimeSpan(0, 0, 5);
-			Timer.Tick += UpdateRealTimeDataAsync;
-			Clock.Tick += UpdateClock;
-			MediaControls = new MediaControls();
+			_timer = new DispatcherTimer();
+			_clock = new DispatcherTimer();
+			_timer.Interval = new TimeSpan(0, 0, 5);
+			_timer.Tick += UpdateRealTimeDataAsync;
+			_clock.Tick += UpdateClock;
+			_mediaControls = new MediaControls();
 			_status = RecordingStatus.NotStarted;
-			Session = new Session();
+			_session = new Session();
 			FaceData = new ObservableCollection<AudienceFrame>();
 			InitializeGraphs();
 		}
@@ -80,7 +81,7 @@ namespace Mercury.Pages
 		// calls the api to get facial data and adds it to the data being graphed
 		private async void UpdateRealTimeDataAsync(object sender, object e)
 		{
-			FaceData.Add(await Session.CreateChartItem(await TakePhoto(), _time));
+			FaceData.Add(await _session.CreateChartItem(await TakePhoto(), _time));
 		}
 
 		// updates the session time
@@ -114,16 +115,16 @@ namespace Mercury.Pages
 				case RecordingStatus.NotStarted:
 					RecordingButton.Content = "Stop Recording";
 					_status = RecordingStatus.Started;
-					Timer.Start();
-					Clock.Start();
+					_timer.Start();
+					_clock.Start();
 					_startDate = DateTime.Now;
 					break;
 				case RecordingStatus.Started:
 					RecordingButton.Content = "Recording Over";
 					RecordingDuration.Text += " - Stopped";
 					_status = RecordingStatus.Finished;
-					Timer.Stop();
-					Clock.Stop();
+					_timer.Stop();
+					_clock.Stop();
 					SaveSession();
 					break;
 			}
@@ -135,7 +136,7 @@ namespace Mercury.Pages
 			//Session Storage
 			StorageFolder testfolder = ApplicationData.Current.LocalFolder;
 			Debug.WriteLine("Local storage: " + testfolder.Path);
-			Session.SaveSession(testfolder.Path);
+			_session.SaveSession(testfolder.Path);
 		}
 
 		// Return to main menu
@@ -152,24 +153,24 @@ namespace Mercury.Pages
 				ToggleRecording();
 			else
 			{
-				MediaControls.StopRecording();
-				Timer.Stop();
-				Clock.Stop();
+				_mediaControls.StopRecording();
+				_timer.Stop();
+				_clock.Stop();
 			}
 		}
 
 		// Initializes and begins the video capture
 		private async Task StartVideoAsync()
 		{
-			PreviewControl.Source = await MediaControls.InitializeCamera();
-			MediaControls.StartRecording();
+			PreviewControl.Source = await _mediaControls.InitializeCamera();
+			_mediaControls.StartRecording();
 		}
 
 		// Captures a frame from video and converts it into a byte array
 		private async Task<byte[]> TakePhoto()
 		{
 			//ImagePreview.Source = await MediaControls.CaptureImageToBitMap();
-			return await MediaControls.CaptureImageToByteArray();
+			return await _mediaControls.CaptureImageToByteArray();
 		}
 
 		// Adjusts the graphs in the page to the data selected in the combo boxes
