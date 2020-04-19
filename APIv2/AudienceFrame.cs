@@ -10,6 +10,8 @@ namespace API
 {
     public class AudienceFrame
     {
+        //Face Features
+        //Must be public for JSON serialization
         public string Time { get; set; }
         public double Anger { get; set; } = 0;
         public double Contempt { get; set; } = 0;
