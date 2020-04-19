@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,10 +13,6 @@ namespace Mercury.Classes
 	public class MediaControls
 	{
 		public MediaCapture Video;
-
-		//public MediaControls()
-		//{
-		//}
 
 		public async Task<MediaCapture> InitializeCamera()
 		{
@@ -63,7 +60,15 @@ namespace Mercury.Classes
 
 		public async void StopRecording()
 		{
-			await Video.StopPreviewAsync();
+			try
+			{
+				await Video.StopPreviewAsync();
+			}
+			catch
+			{
+				Debug.WriteLine("Attempted to stop an unstarted MediaCapture");
+			}
+
 		}
 	}
 
