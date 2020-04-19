@@ -11,11 +11,11 @@ using API;
 namespace Mercury.Pages
 {
 	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
+	/// Shows data from different sessions, each in their own graph
 	/// </summary>
 	public sealed partial class StatisticsPage : Page
 	{
-		public List<SavedSession> SelectedSessions;
+		private List<SavedSession> _selectedSessions;
 		public ObservableCollection<AudienceFrame> FaceData { get; }
 
 		public StatisticsPage()
@@ -26,12 +26,12 @@ namespace Mercury.Pages
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
-			SelectedSessions = e.Parameter as List<SavedSession>;
+			_selectedSessions = e.Parameter as List<SavedSession>;
 			PopulateSessionList();
 			PopulateGraphs();
 		}
 
-		private async void Page_Loaded(object sender, RoutedEventArgs e)
+		private void Page_Loaded(object sender, RoutedEventArgs e)
 		{
 			DataContext = this;
 		}
@@ -43,7 +43,7 @@ namespace Mercury.Pages
 
 		private void PopulateSessionList()
 		{
-			foreach (var session in SelectedSessions)
+			foreach (var session in _selectedSessions)
 			{
 				SessionListView.Items?.Add(session);
 			}

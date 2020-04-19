@@ -5,7 +5,7 @@ using Ailon.QuickCharts;
 
 namespace Mercury.Classes
 {
-	enum GraphData
+	public enum GraphData
 	{
 		Anger,
 		Contempt,
@@ -17,7 +17,7 @@ namespace Mercury.Classes
 		Surprise
 	}
 
-	static class GraphingTools
+	public static class GraphingTools
 	{
 		// Fills a combobox with items
 		public static void PopulateComboBox(ComboBox comboBox)
@@ -36,7 +36,7 @@ namespace Mercury.Classes
 				graph.Visibility = Visibility.Collapsed;
 			}
 
-			chart.Graphs[(int)comboBox.SelectedIndex].Visibility = Visibility.Visible;
+			chart.Graphs[comboBox.SelectedIndex].Visibility = Visibility.Visible;
 		}
 	}
 }

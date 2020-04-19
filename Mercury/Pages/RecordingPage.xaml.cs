@@ -19,7 +19,7 @@ namespace Mercury.Pages
 	/// </summary>
 
 	// 
-	enum RecordingStatus
+	internal enum RecordingStatus
 	{
 		NotStarted,
 		Started,
@@ -31,34 +31,30 @@ namespace Mercury.Pages
 
 	public sealed partial class RecordingPage : Page
 	{
-		private DispatcherTimer _timer;
-		private DispatcherTimer _clock;
+		private DispatcherTimer Timer { get; }
+		private DispatcherTimer Clock { get; }
+		private Session Session { get; }
+		private MediaControls MediaControls { get; }
+		public ObservableCollection<AudienceFrame> FaceData { get; }
+
 		private DateTime _startDate;
 		private string _time;
-		
 		private RecordingStatus _status;
-		public Session Session;
-		public MediaControls MediaControls;
-		//public List<SavedSession> SavedSessions;
-		
-		public ObservableCollection<AudienceFrame> FaceData { get; }
 
 		public RecordingPage()
 		{
 			this.InitializeComponent();
 
-			_timer = new DispatcherTimer();
-			_clock = new DispatcherTimer();
-			_timer.Interval = new TimeSpan(0, 0, 5);
-			_timer.Tick += UpdateRealTimeDataAsync;
-			_clock.Tick += UpdateClock;
+			Timer = new DispatcherTimer();
+			Clock = new DispatcherTimer();
+			Timer.Interval = new TimeSpan(0, 0, 5);
+			Timer.Tick += UpdateRealTimeDataAsync;
+			Clock.Tick += UpdateClock;
 			MediaControls = new MediaControls();
 			_status = RecordingStatus.NotStarted;
 			Session = new Session();
 			FaceData = new ObservableCollection<AudienceFrame>();
 			InitializeGraphs();
-
-			//Application.Current.Resuming += Application_Resuming;
 		}
 
 		private void InitializeGraphs()
@@ -118,15 +114,16 @@ namespace Mercury.Pages
 				case RecordingStatus.NotStarted:
 					RecordingButton.Content = "Stop Recording";
 					_status = RecordingStatus.Started;
-					_timer.Start();
-					_clock.Start();
+					Timer.Start();
+					Clock.Start();
 					_startDate = DateTime.Now;
 					break;
 				case RecordingStatus.Started:
 					RecordingButton.Content = "Recording Over";
+					RecordingDuration.Text += " - Stopped";
 					_status = RecordingStatus.Finished;
-					_timer.Stop();
-					_clock.Stop();
+					Timer.Stop();
+					Clock.Stop();
 					SaveSession();
 					break;
 			}
@@ -144,23 +141,21 @@ namespace Mercury.Pages
 		// Return to main menu
 		private void Exit_Click(object sender, RoutedEventArgs e)
 		{
-			if(_status == RecordingStatus.Started)
-				ToggleRecording();
+			
 			Frame.Navigate(typeof(MainMenu));
 		}
-
-		//// Ensure Video control updates properly after losing focus
-		//private async void Application_Resuming(object sender, object o)
-		//{
-		//	await StartVideoAsync();
-		//}
 
 		// Ensures the video control stops correctly
 		protected override void OnNavigatedFrom(NavigationEventArgs e)
 		{
-			MediaControls.StopRecording();
-			_timer.Stop();
-			_clock.Stop();
+			if (_status == RecordingStatus.Started)
+				ToggleRecording();
+			else
+			{
+				MediaControls.StopRecording();
+				Timer.Stop();
+				Clock.Stop();
+			}
 		}
 
 		// Initializes and begins the video capture

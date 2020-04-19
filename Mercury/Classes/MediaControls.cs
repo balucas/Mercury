@@ -12,28 +12,31 @@ namespace Mercury.Classes
 {
 	public class MediaControls
 	{
-		public MediaCapture Video;
+		private MediaCapture _video;
 
 		public async Task<MediaCapture> InitializeCamera()
 		{
-			if (Video == null)
+			if (_video == null)
 			{
 				// Get the camera devices
 				var cameraDevices = await DeviceInformation.FindAllAsync(DeviceClass.VideoCapture);
-				Video = new MediaCapture();
+				_video = new MediaCapture();
 
-				await Video.InitializeAsync(new MediaCaptureInitializationSettings
-				{
-					VideoDeviceId = cameraDevices.FirstOrDefault().Id
-				});
+				var videoDeviceId = cameraDevices.FirstOrDefault()?.Id;
+				if (videoDeviceId != null)
+					await _video.InitializeAsync(new MediaCaptureInitializationSettings
+					{
+						VideoDeviceId = videoDeviceId
+					});
 			}
-			return Video;
+			return _video;
 		}
 
+		// Convert frame from mediacapture into byte array
 		public async Task<byte[]> CaptureImageToByteArray()
 		{
 			var stream = new InMemoryRandomAccessStream();
-			await Video.CapturePhotoToStreamAsync(ImageEncodingProperties.CreateJpeg(), stream);
+			await _video.CapturePhotoToStreamAsync(ImageEncodingProperties.CreateJpeg(), stream);
 
 			stream.Seek(0);
 			var readStream = stream.AsStreamForRead();
@@ -42,6 +45,7 @@ namespace Mercury.Classes
 			return byteArray;
 		}
 
+		// Convert frame from mediacapture into bitmap
 		//public async Task<BitmapImage> CaptureImageToBitMap()
 		//{
 		//	var stream = new InMemoryRandomAccessStream();
@@ -53,22 +57,23 @@ namespace Mercury.Classes
 		//	return bitMap;
 		//}
 
+		// Start the mediacapture preview
 		public async void StartRecording()
 		{
-			await Video.StartPreviewAsync();
+			await _video.StartPreviewAsync();
 		}
 
+		// Stop the mediacapture preview
 		public async void StopRecording()
 		{
 			try
 			{
-				await Video.StopPreviewAsync();
+				await _video.StopPreviewAsync();
 			}
 			catch
 			{
 				Debug.WriteLine("Attempted to stop an unstarted MediaCapture");
 			}
-
 		}
 	}
 

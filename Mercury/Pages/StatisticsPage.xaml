@@ -34,7 +34,7 @@
 			BorderBrush="Gray">
 			<ListView
 				x:Name="SessionListView"
-				ItemsSource="{x:Bind SelectedSessions}"
+				ItemsSource="{x:Bind _selectedSessions}"
 				SelectionMode="Single"
 				SelectionChanged="SessionListView_OnSelectionChanged"
 				HorizontalAlignment="Center">
